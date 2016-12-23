@@ -1,0 +1,21 @@
+<!--DOCTYPE html -->
+
+<html>
+<body>
+
+    <h1>{{ title }} is Working.</h1>
+    {% for blog in blog_list %}
+
+    <a href="/blog/detail/{{ blog.id }}"> {{ blog.title }}</a></br>
+    {{ blog.content }}</br>
+    {% comment %}<a href='{% url "detail" id=blog.id %}'> {{ blog.content }}</a></br>{% endcomment %}
+    {% url "blog:detail" id=blog.id %}
+    <a href='{{ blog.get_absolute_url }}'> {{ blog.createdDate }}</a></br>
+    {{ blog.updatedDate }}</br>
+    {{ blog.id }}</br>1
+    {{ blog.pk }}</br>
+
+    {% endfor %}
+</body>
+
+</html>

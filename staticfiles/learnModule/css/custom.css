@@ -1,0 +1,150 @@
+ .headdiv
+    {
+    display:none;
+    }
+    #contenttitle
+    {
+       cursor:pointer;
+    }
+
+@media only screen and (min-width: 480px), only screen and (min-device-width: 480px) {
+    .scontent
+    {
+    height:8em;
+    }
+    .cardimgs
+    {
+     height:14em;
+    }
+  }
+}
+
+.searchcontentdiv
+{
+margin-bottom:-10px !important;
+}
+.searchbtn
+{
+margin:10px;
+}
+.contentinfo
+{
+margin:10px;
+}
+.showcheckbox
+{
+ opacity: 1 !important;
+ left: 7% !important ;
+ transform: scale(1.5);
+}
+.uploadimage
+{
+    margin-top: -5%;
+    margin-left: 8%;
+}
+.contentimg
+{
+    height:25em;
+}
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+.setrow{
+    overflow:hidden;
+    width:49%;
+}
+
+.resourcedata
+    {
+      width:100% !important;
+    }
+    .uploadimage
+    {
+        margin-top: -10%;margin-left: 20%;
+    }
+
+        .contentimg
+        {
+            height:18em;
+        }
+
+}
+.displayinfo
+{
+margin-top:30%!important;
+}
+.image-upload > input
+{
+    display: none;
+}
+#panel {
+    margin:2px;
+    display: none;
+}
+.myavtarimage
+{
+    height:100px !important;
+    width:100px;
+     background-size:cover;
+ }
+
+.myimage
+{
+    width: 100px !important;
+    display:block;
+    height: 100px;
+    border-radius:50%;
+    background-size:cover;
+}
+
+.editimage
+{
+    height:100px !important;
+    width:100px;
+     background-size:cover;
+}
+
+#flip
+{
+cursor: pointer;
+}
+.loginbtn
+{
+width:100% !important;
+}
+
+.teamtitle
+{
+line-height: 1em;
+padding:0.4%;
+background-color:rgba(0,0,0,0.3)
+}
+.teamimages
+{
+height:230px !important;
+}
+.headnames
+{
+font-size: 70%;
+}
+.menulinks
+{
+color:white !important;
+}
+.bannerfont
+{
+   font:family:normal;
+  background-color:#fff;
+  overflow:hidden;
+  display:inline-block;
+  font-weight:bold;
+  font-size:4em !important;
+}
+.bannercard
+{
+   padding:1px;
+   margin-top: 0px;
+}
+.cardcontent
+{
+    line-height:2px !important;
+}

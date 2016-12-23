@@ -1,0 +1,242 @@
+{% extends 'learnModule/base-site.html' %}
+{% load urlify  %}
+{% load static %}
+{% block content %}
+{% static "" as baseUrl %}
+
+<style>
+#index-banner
+{
+    background: url("../../static/learnModule/images/hero03.JPG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+}
+
+</style>
+
+<div id="consultPage">
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="right">
+     <img src="../../static/learnModule/images/u485.PNG" height="425px">
+    </div>
+      <div class="container">
+             <div class="row">
+                <div class="col s12 m12">
+                  <div class="card">
+                    <div class="card-title center">
+                          <strong id="consultTitle"></strong>
+                    </div>
+                    <div class="card-content">
+                        <p id="para1"></p><br/>
+
+                         <p class="center" style="font-size:20px;"><b id="boldpara1"></b></p>
+                        <br/><br/>
+                        <div>
+                           <a href="/learnModule/ConsultCourses/" class="orange-text left" id="miniCourse"></a>
+                           <span id="flip" class="right">
+                                <i class="material-icons" id="myicondown">keyboard_arrow_down</i>
+                            </span>
+                            <br/>
+                            <div id="panel" class="card-content">
+                                <p id="consultpanelpara1"></p>
+                                <br/>
+                      <p id="consultpanelpara2"></p><br/>
+                      <p id="consultpanelpara3"></p><br/>
+                      <p id="consultpanelpara4"></p>
+                           </div>
+
+                      </div>
+
+                </div>
+            </div>
+       </div>
+  </div>
+
+</div>
+</div>
+
+
+
+<!--Library Data-->
+<div class="container">
+
+    <div>
+      <h6><b id="highresourcetitle"></b></h6><br>
+    </div>
+ <nav class="nav-extended">
+    <div class="nav-wrapper">
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active" href="#test1" id="consultall"></a></li>
+        <li class="tab"><a href="#test2" id="consultinfo"></a></li>
+        <li class="tab"><a href="#test3" id="consulttoolkit"></a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="test1" class="col s12">
+   {% if LibraryData %}
+    <div class="row">
+    {% for LibraryData in LibraryData %}
+           <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if LibraryData.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{LibraryData.id}}"><img class="large cardimgs" src='{% static LibraryData.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{LibraryData.id}}"><img class="large cardimgs" src="{{ baseUrl }}learnModule/images/{{LibraryData.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+             <div class="card-content scontent">
+                <p>{{ LibraryData.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+            <div class="card-action">
+                {% if LibraryData.file_content != '' and LibraryData.format_id == 2 %}
+                    <a href="{{LibraryData.file_content|cut:'staticfiles'}}/{{LibraryData.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif LibraryData.file_content != '' and LibraryData.format_id == 10  %}
+                  <a href="{{ LibraryData.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+
+                <div  style="display:inline" id="all{{LibraryData.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{LibraryData.id}},
+                         {% if LibraryData.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                        {% if LibraryData.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+                <div class="fixed-action-btn horizontal col push-s4 push-m4" style="display:inline">
+                    <a class="btn-floating md-36 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ LibraryData.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+  <div id="test2" class="col s12">
+  {% if DataInfo %}
+    <div class="row">
+    {% for DataInfo in DataInfo %}
+         <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if DataInfo.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{DataInfo.id}}"><img class="large cardimgs" src='{% static DataInfo.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{DataInfo.id}}"><img class="large cardimgs" src="{{ baseUrl }}learnModule/images/{{DataInfo.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+             <div class="card-content scontent">
+              <p>{{ DataInfo.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+            <div class="card-action">
+                {% if DataInfo.file_content != '' and DataInfo.format_id == 2 %}
+                    <a href="{{DataInfo.file_content|cut:'staticfiles'}}/{{DataInfo.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif DataInfo.file_content != '' and DataInfo.format_id == 10  %}
+                  <a href="{{ DataInfo.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+
+                <div  style="display:inline" id="info{{DataInfo.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{DataInfo.id}},
+                         {% if DataInfo.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'info')">
+                        {% if DataInfo.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+                <div class="fixed-action-btn horizontal col push-s4 push-m4" style="display:inline">
+                    <a class="btn-floating md-36 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataInfo.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+  <div id="test3" class="col s12">
+  {% if DataToolkit %}
+    <div class="row">
+    {% for DataToolkit in DataToolkit %}
+          <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if DataToolkit.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{DataToolkit.id}}"><img  class="large cardimgs" src='{% static DataToolkit.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{DataToolkit.id}}"><img class="large cardimgs" src="{{ baseUrl }}learnModule/images/{{DataToolkit.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+             <div class="card-content scontent">
+              <p>{{ DataToolkit.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+            <div class="card-action">
+                {% if DataToolkit.file_content != '' and DataToolkit.format_id == 2 %}
+                    <a href="{{DataToolkit.file_content|cut:'staticfiles'}}/{{DataToolkit.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif DataToolkit.file_content != '' and DataToolkit.format_id == 10  %}
+                  <a href="{{ DataToolkit.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+
+                <div  style="display:inline" id="tool{{DataToolkit.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{DataToolkit.id}}, {% if DataToolkit.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'tool')">
+                        {% if DataToolkit.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+                <div class="fixed-action-btn horizontal col push-s4 push-m4" style="display:inline">
+                    <a class="btn-floating md-36 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataToolkit.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+    <div class="row">
+         <a href="/library/" class="right orange-text" id="more">MORE LIKE THIS</a>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+

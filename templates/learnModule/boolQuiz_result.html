@@ -1,0 +1,84 @@
+<style>
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-24 { font-size: 24px; }
+    .material-icons.md-36 { font-size: 36px; }
+    .material-icons.md-48 { font-size: 48px; }
+
+    /* Rules for using icons as black on a light background. */
+    .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+    .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+    /* Rules for using icons as white on a dark background. */
+    .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+    .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+    .material-icons.orange600 { color: #FB8C00; }
+    .material-icons.gr { color: #2E7D32; }
+    .material-icons.rd { color: #D50000; }
+</style>
+
+
+<!-- SHOW LATEST RESULT DETAILS   -->
+
+        <div class="container">
+            <div class="row">
+
+<!-- Quiz Answer Result Data -->
+                <div class="col s12 m12 l12 pull-l1">
+                    <div class="row" id="ContentDetailPage">
+                    {% if uBQDetail %}
+                        <div class="col s12 m12 l12">
+                            <h6><b>Score : {{ score|floatformat:2 }}%</b></h6>
+                            <h5><b>{{ fbWords }}</b></h5>
+                            An explanation of the results. A general feedback based of on "score", then it is explained that the right answers for each question are written below.
+                        </div>
+                        {% for uBQDetail in uBQDetail %}
+                            <div class="col s12 m12 l12">
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="col s2 m2 l2">
+                                            <div class="card-content">
+                                                {% if uBQDetail.isCorrect == False %}
+                                                    <i class="material-icons md-48 rd">cancel</i>
+                                                {% else %}
+                                                    <i class="material-icons md-48 gr">check_circle</i>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col s10 m10 l10">
+                                            <div class="card-content">
+                                                <b>Question {{ forloop.counter }} : </b>
+                                                {% if uBQDetail.isCorrect == False %}
+                                                    <b> Incorrect</b><br>
+                                                {% else %}
+                                                    <b> Correct</b><br>
+                                                {% endif %}
+                                                {% if uBQDetail.isCorrect == False %}
+                                                        {% for correctChoice in correctChoice %}
+                                                        {% if correctChoice.question == uBQDetail.question %}
+                                                            Correct Answer: {{ correctChoice.choiceText }}<br>
+                                                            {{ correctChoice.answerDescription }}
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                {% else %}
+                                                        {% for correctChoice in correctChoice %}
+                                                        {% if correctChoice.question == uBQDetail.question %}
+                                                            {{ correctChoice.answerDescription }}
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No results are available.</p>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+

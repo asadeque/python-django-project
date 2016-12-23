@@ -1,0 +1,403 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% load urlify  %}
+{% block content %}
+{% static "" as baseUrl %}
+
+<style>
+
+#index-banner
+{
+    background: url("../static/learnModule/images/hero07.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+}
+.mydiv{
+display:none;
+}
+
+
+</style>
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="right">
+     <img src="../static/learnModule/images/u3560.PNG" height="425px">
+    </div>
+      <div class="container resourcedata">
+             <div class="row">
+                <div class="col s12 m12 l12">
+                  <div class="card">
+                    <div class="card-title center">
+                          <strong>A Library of Curated Resources</strong>
+                    </div>
+                    <div class="card-content">
+                     Here a text description of what kind of articles we share here, how to use the different search buttons, etc.
+                        <br/><br/>
+                       <div class="row searchcontentdiv">
+
+                       <form method="post" action="/library/"  class="col s12">
+            {% csrf_token %}
+                            <div class="input-field col s11 m11 l11">
+                              <input id="search" type="text" name="search" placeholder="Enter Search Terms">
+                              <label for="search" class="orange-text">Search</label>
+
+                            </div>
+                            <div class="input-field col s1 m1 l1">
+                                 <button><i class="material-icons orange-text">search</i></button>
+                            </div>
+
+                      </div>
+                   </div>
+                  </div>
+                </div>
+            </div>
+       </div>
+  </div>
+
+
+
+<div class="resourcedata">
+    <div class="row">
+
+        <div class="col s12 m6 l3 push-l1">
+<!--       <div class="col s12 m4 l3 pull-l1"> -->
+         <div id="filterMenu">
+
+                    <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                        <div class="collapsible-header">
+                            <div><h5>Advanced Search</h5>
+                                    <h6>Find What you are looking for</h6>
+                            </div>
+                             <div class="orange-text">Enter Keywords</div>
+                            <div class="chips chips-initial"></div>
+                        <input type="hidden" id="keywordForSearch" name="keywordForSearch" value="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Topic
+                          <span class="right">
+                                <i class="material-icons" onclick="tooglesearchdiv('myiconkeyboard','panelkeyboard')" id="myiconkeyboard">keyboard_arrow_down</i>
+                            </span>
+
+
+                      <div id="panelkeyboard" class="mydiv">
+                            {% if TopicContent %}
+                                {% for content in TopicContent %}
+                                    <div class="switch">
+                                    <label>{{ content.title  }}
+                                                <input type="checkbox" name="topic" id="topic" onclick='Switch_Activate_Topic({{content.id}},this)'>
+                                    <span class="lever right"></span>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="hidden" id="topicForSearch" name="topicForSearch" value="">
+                        </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Content Type
+                          <span class="right">
+                                <i class="material-icons" onclick="tooglesearchdiv('myiconcontent','panelcontent')" id="myiconcontent">keyboard_arrow_down</i>
+                            </span>
+
+
+                       <div id="panelcontent" class="mydiv">
+                            {% if LibraryTypeContent %}
+                                {% for content in LibraryTypeContent %}
+                                        <div class="switch">
+                                        <label>{{ content.name  }}
+                                            <input type="checkbox" name="content" id="content" onclick='Switch_Activate_Content({{content.id}},this)'>
+                                            <span class="lever right"></span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="hidden" id="ContentForSearch" name="ContentForSearch" value="">
+                        </div>
+                     </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Written By
+                           <span class="right">
+                                <i class="material-icons" onclick="tooglesearchdiv('myiconby','panelwritternby')" id="myiconby">keyboard_arrow_down</i>
+                            </span>
+
+                          <div id="panelwritternby" class="mydiv">
+                            {% if writternByContent %}
+                                {% for content in writternByContent %}
+                                        <div class="switch">
+                                        <label>{{ content.name  }}
+                                            <input type="checkbox" name="writternby" id="writternby" onclick='Switch_Activate_WritternBy({{content.id}},this)'>
+                                            <span class="lever right"></span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                        {% endif %}
+                            <input type="hidden" id="writternbyForSearch" name="writternbyForSearch" value="">
+                         </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Written For
+                         <span class="right">
+                                <i class="material-icons" onclick="tooglesearchdiv('myiconfor','panelwrittenfor')" id="myiconfor">keyboard_arrow_down</i>
+                            </span>
+
+                         <div id="panelwrittenfor" class="mydiv">
+                            {% if writternForContent %}
+                                {% for content in writternForContent %}
+                                        <div class="switch">
+                                        <label>{{ content.name  }}
+                                        <input type="checkbox" name="writternfor" id="writternfor" onclick='Switch_Activate_WritternFor({{content.id}},this)'>
+                                        <span class="lever right"></span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                        {% endif %}
+                        <input type="hidden" id="writternforForSearch" name="writternforForSearch" value="">
+                        </div>
+                             </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Complexity
+                        <span class="right">
+                                <i class="material-icons" onclick="tooglesearchdiv('myiconcomp','panelcomplexity')" id="myiconcomp">keyboard_arrow_down</i>
+                         </span>
+
+                        <div id="panelcomplexity" class="mydiv">
+                         {% if complexityContent %}
+                            <table>
+                                {% for content in complexityContent %}
+
+                                   <div class="switch">
+                                           <label>
+                                         {{ content.title  }}
+                                        <input type="checkbox" name="complexity" id="complexity" onclick='Switch_Activate_complexity({{content.id}},this)'>
+                                        <span class="lever right"></span>
+                                         </label>
+                                        </div>
+                                {% endfor %}
+                                </table>
+                         {% endif %}
+                        <input type="hidden" id="complexityForSearch" name="complexityForSearch" value="">
+                            </div>
+                            </div>
+                        </li>
+
+                         <div class="collapsible-header">
+                          <div class="row searchbtn">
+                            <input type="submit" class="btn orange" name="Search" value="Search">
+                            <input type="hidden" name="SearchinLibrary" value="" />
+                            <input type="hidden" name="SearchFilter" value="Search" />
+                        </div>
+                             </div>
+                    </ul>
+                <br/>
+            </form>
+         </div>
+       </div>
+       <div class="col s12 m9 l7 push-l1">
+            {% if LibraryDatas %}
+               <div class="row"> <h5>Result for </h5></div>
+                {% for content in LibraryDatas %}
+                    <div class="card">
+                        <div class="card-title">
+                            <h5 class="left">{{ content.title }}</h5>
+                         </div>
+                           <div class="col s12 m12 l12 left">
+                            <div class="row left">
+                                 {{ content.author }}, {{ content.createdDate.date }}
+                            </div>
+                            <div class="col chip right">
+                                 {{ content.keywords|safe|truncatechars:50 }}
+                            </div>
+                        </div>
+                        <div class="card-image small">
+                            {% if content.imageURL != '' %}
+                                <a href="/library/libraryDetails/{{ content.pk }}">
+                                            <img class="contentimg" src='{% static content.imageURL|cut:"staticfiles"  %}' alt=""/>
+                                    </a>
+                            {% else %}
+                                <a href="/library/libraryDetails/{{ content.pk }}">
+                                    <img class="contentimg" src="{{ baseUrl }}learnModule/images/{{content.LibraryType}}.png" alt=""/></a>
+                            {% endif %}
+                         </div>
+
+                        <div class="row contentinfo">
+                            <h4><b id="desc{{forloop.counter}}"></b></h4>
+                            {{ content.description|safe|truncatechars:500 }}
+                              <div>
+                             <br/>
+                           <div class="left">
+                               <a href="/library/libraryDetails/{{ content.pk }}" class="orange-text"> More Information</a></div>
+                           <span id="flip" class="right">
+                                <i class="material-icons" onclick="tooglelibcontent({{forloop.counter}})" id="icon{{forloop.counter}}">keyboard_arrow_down</i>
+                           </span>
+                            <br/>
+                        <div id="panel{{forloop.counter}}" class="mydiv">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left">Content Type: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.LibraryType }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Country: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.country }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">File Format: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.format }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">File Size: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.sizeInPages }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Length: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.lengthInMB }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Language: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.language }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Complexity: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.complexity }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Written By: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.writtenBy }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Written For: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.writtenFor }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Keywords: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.keywords }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Copyright: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ content.copyRight }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                       </div>
+
+                      </div>
+                        </div>
+
+                        <div class="card-action" style="border:1 solid black;">
+                                <div id="all{{content.id}}">
+                                <i class="material-icons md-36 orange600 left"
+                                    onclick="fpicFavContent({{content.id}},
+                                        {% if content.id in CFR %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                                    {% if content.id in CFR %}favorite{% else %}favorite_border{% endif %}
+                                </i>
+                              </div>
+                                <div class="fixed-action-btn" style="display:inline">
+                                <a class="btn-floating md-36 red">
+                                    <i class="material-icons">share</i>
+                                </a>
+                                <ul>
+                                    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                        class="btn-floating red"><i class="material-icons">cloud</i></a>
+                                    </li>
+                                    <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}"
+                                        class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a>
+                                    </li>
+                                    <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ content.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}"
+                                        class="btn-floating blue"><i class="material-icons">email</i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                                <div class="col right">
+                                  {% if content.file_content != '' and content.format_id == 2 %}
+                                    <a href="{{content.file_content|cut:'staticfiles'}}/{{content.pk}}"
+                                        target="_blank">
+                                        <i class="material-icons md-36 right">file_download</i>
+                                    </a>
+                                {% elif content.file_content != '' and content.format_id == 10  %}
+                                        <a href="{{ content.file_content }}" target="_blank">
+                                            <i class="material-icons md-36 right">more_horiz</i></a>
+                                {% endif %}
+                               </div>
+                        </div>
+                       <!-- <div class="card-action">
+                            <div class="row">
+                                {% if content.file_content != '' and content.format_id == 2 %}
+                                    <a style="display:inline" href="{{content.file_content|cut:'staticfiles'}}/{{content.pk}}"
+                                        target="_blank">
+                                        <i class="material-icons md-36 right">file_download</i>
+                                    </a>
+                                {% elif content.file_content != '' and content.format_id == 10  %}
+                                        <a style="display:inline" href="{{ content.file_content }}" target="_blank">
+                                            <i class="material-icons md-36 right">more_horiz</i></a>
+                                {% endif %}
+                            </div>
+                            <div style="display:inline" id="all{{content.id}}">
+                                <i  class="material-icons md-36 orange600 left"
+                                    onclick="fpicFavContent({{content.id}},
+                                        {% if content.id in CFR %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                                    {% if content.id in CFR %}favorite{% else %}favorite_border{% endif %}
+                                </i>
+                            </div>
+                            <div class="fixed-action-btn col push-s3 push-m5" style="display:inline">
+                                <a class="btn-floating md-36 red">
+                                    <i class="material-icons">share</i>
+                                </a>
+                                <ul>
+                                    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                        class="btn-floating red"><i class="material-icons">cloud</i></a>
+                                    </li>
+                                    <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}"
+                                        class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a>
+                                    </li>
+                                    <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ content.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}"
+                                        class="btn-floating blue"><i class="material-icons">email</i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>-->
+                    </div>
+                {% endfor %}
+                <div class="col s12 m12 center">
+                    {% include "learnModule/paginator.html" with page=LibraryDatas %}
+                </div>
+            {% else %}
+                {% include "library/noResults.html" %}
+            {% endif %}
+      </div>
+    </div>
+</div>
+ {% endblock %}
+

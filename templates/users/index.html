@@ -1,0 +1,70 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+{% include "blog/messages_display.html" %}
+<style>
+#index-banner
+{
+    background: url("../../static/learnModule/images/bg.jpg") no-repeat 100% center;
+    background-size: cover;
+    width: 100%;
+    height: 600px;
+}
+
+</style>
+
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="center hide-on-small-only">
+		<img src="../../static/learnModule/images/u4772.PNG" height="150px">
+    </div>
+
+	  <div class="center hide-on-med-and-up">
+		<img src="../../static/learnModule/images/u4772.PNG" width="95%">
+    </div>
+      <div class="container">
+         <div class="row">
+			<div class="container">
+
+			<h5 class="center white-text">Login with your email</h5>
+			<form class="col s12 m12 l10 push-l1" action="/users/Login/" method="post">
+				{% csrf_token %}
+			  <div class="row">
+				<div class="input-field white-text">
+				 <input id="emailid" type="email" name="email" required="required" class="validate" placeholder="yourname@example.com">
+				  <label for="emailid" class="white-text">Email</label>
+				</div>
+				   <span id="error_message_email" class=""></span>
+			  </div>
+
+			<div class="row">
+				<div class="input-field white-text">
+				  <input id="pwd" name="password" type="password" required="required" class="validate white-text" placeholder="Password">
+				  <label for="pwd" class="white-text">Password</label>
+				</div>
+					<span id="error_message_pwd"></span>
+			  </div>
+
+			 <div class="row">
+				<div class="center">
+					<button class="btn waves-effect waves-light red loginbtn" value="Sign In" type="submit" name="submit">Login</button>
+				</div>
+			  </div>
+
+
+			<div class="row center">
+				<h6><a href="#" class="white-text"><u>Forgot Your Password?</u></a></h6>
+			</div>
+
+			<div class="row center">
+				<h6 class="white-text">No account? <a href="/users/signup/" class="white-text" ><u>Create One</u></a></h6>
+			</div>
+			</form>
+			</div>
+  		 </div>
+		</div>
+	</div>
+
+
+{% endblock %}

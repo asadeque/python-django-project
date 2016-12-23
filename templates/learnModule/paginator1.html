@@ -1,0 +1,36 @@
+<nav aria-label="Page Navigation">
+{% if page.has_other_pages %}
+    <ul class="pagination">
+        {% if page.number %}
+            <li><a aria-label="First" href="?Filter=search&page=1">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% if page.has_previous %}
+            <li><a aria-label="Previous" href="?Filter=search&page={{page.previous_page_number}}">&lsaquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&lsaquo;</span></li>
+        {% endif %}
+        {% for pages in page.paginator.page_range %}
+            {% if page.number == pages %}
+                <li class="active"><span>{{ pages }}<span class="sr-only">(current)</span></span></li>
+            {% else %}
+                <li><a href="?Filter=search&page={{pages}}">{{ pages }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% comment %}<li><span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </span></li>{% endcomment %}
+        {% if page.has_next %}
+            <li><a aria-label="Next" href="?Filter=search&page={{page.next_page_number}}">&rsaquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&rsaquo;</span></li>
+        {% endif %}
+        {% if page.paginator.num_pages %}
+            <li><a aria-label="Last" href="?Filter=search&page={{ page.paginator.num_pages }}">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+{% endif %}
+</nav>

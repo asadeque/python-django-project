@@ -1,0 +1,98 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %}
+    {% load pagination_tags %}
+{% endcomment %}
+
+<!-- SHOW RESOURCES   -->
+<div class="container ">
+    <div class="row">
+<!-- Content Details Data -->
+        <div class="col s12 m12 l12">
+            {% if contentData %}
+            {% if contentData.style == '1' or contentData.style == '2' %}
+                <div class="row" id="ContentDetailPage">
+                    {% static "" as baseUrl %}
+                    <div class="col s12 m12 l12">
+                        <h4 style="text-transform:initial; text-align:center"><b>{{ contentData.title }}</b></h4>
+                        {% if contentData.imageURL != '' %}
+                            <a href="#">
+                                <img class="responsive-img"
+                                    src='{{ baseUrl }}learnModule/images/{{contentData.imageURL}}' alt=""/>
+                            </a>
+                        {% else %}
+                            <a href="#">
+                                <img class="responsive-img"
+                                    src='{{ baseUrl }}learnModule/images/{{contentData.contentType}}.png' alt=""/>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <h4><b id="desc"></b></h4>
+                        <h6 style="text-transform:initial">{{ contentData.description }}</h6>
+                        {% if contentData.file_content != '' and contentData.format_id == 2 %}
+                            <a href="{{baseUrl}}learnModule/images/{{ contentData.file_content }}" download="" target="_blank">
+                            <button id="download"></button></a>
+                        {% elif contentData.file_content != '' and contentData.format_id == 10  %}
+                            <a href="{{ contentData.file_content }}" target="_blank">
+                            <button id="ClickMe"></button></a>
+                        {% endif %}
+                        <form name="done"  method='POST'>
+                            {% csrf_token %}
+                            {% if not CLC %}
+                                <a href="/learnModule/Learned/{{contentData.id}}" class="button special">
+                                    <i class="medium material-icons">done</i>
+                                </a>
+                            {% endif %}
+                            {% if not CFC %}
+                                <a href="/learnModule/Favourite/{{contentData.id}}" class="button special">
+                                    <i class="medium material-icons">turned_in</i>
+                                </a>
+                            {% else %}
+                                <a href="/learnModule/DelFavourite/{{contentData.id}}" class="button special">
+                                    <i class="medium material-icons">turned_in_not</i>
+                                </a>
+                            {% endif %}
+                        </form>
+
+                    </div>
+                </div>
+            {% elif contentData.style == '5' %} <!-- Multiple Choice Quiz Data -->
+            <form name="quiz" method="POST">
+                {% csrf_token %}
+                <header style="text-align:center">
+                    <h3>Test Your Knowledge</h3>
+                </header>
+                {% if QuizList %}
+                    {% for QuizList in QuizList %}
+                        {% for QuestionList in QuestionList %}
+                        {% if QuestionList.quiz_id == QuizList.id %}
+                            <div class="card">
+                                <div class="card-content">
+                                    Question: {{ QuestionList.id }}
+                                        {{ QuestionList.questionText }}<br>
+                                        {% for ChoiceList in ChoiceList %}
+                                        {% if ChoiceList.question_id == QuestionList.id %}
+                                            <input id="{{forloop.counter}}" type="radio" value="{{ ChoiceList.id }}" name="{{ChoiceList.question_id}}">
+                                            <label for="{{forloop.counter}}">{{ ChoiceList.choiceText }}</label><br>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <input type="submit" value="Check Result" name="submit"/>
+            </form>
+            {% endif %}
+            {% else %}
+                <p>No content are available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+ {% endblock %}
+

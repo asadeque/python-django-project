@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<english>
+        <headerMenu>
+            <title>FPIC.INFO</title>
+            <searchPlaceholder>Search</searchPlaceholder>
+            <langword>Language</langword>
+			<help>Help</help>
+        </headerMenu>
+
+		<footerMenu>
+			<sectionheading>about</sectionheading>
+			<Link1>Indigenous Rights and Resource Governance Research Group</Link1>
+			<Link2>Deyahahá:ge</Link2>
+			<sectionheading2>PARTNER INSTITUTIONS</sectionheading2>
+			<sectionheading3>SUPPORTED PARTIALLY BY</sectionheading3>
+		</footerMenu>
+
+		<index>
+			<hptitle>Indigenous Peoples Have the Right to Decide</hptitle>
+            <hptitlem>Indigenous Peoples Have the Right to Decide</hptitlem>
+            <hpdesc1>Welcome.</hpdesc1>
+			<hpdesc2>The website was developed with and for Indigenous Peoples to advance access to and
+                     understanding of the right to Free, Prior and Informed Consent (FPIC) in relation to
+                     decisions about land and resource rights and responsibilities, and community development.</hpdesc2>
+			<lm>LEARN MORE</lm>
+            <panelpara>Indigenous peoples have the right to self-determination. By virtue of that right they freely
+                  determine their political status and freely pursue their economic, social and cultural development. (The United Nations Declaration on the Rights of Indigenous Peoples, Article 3)</panelpara>
+            <head3>FREE, PRIOR, AND INFORMED CONSENT IS ONE OF THE MAIN PRINCIPLES OF THE UNITED NATIONS DECLARATION ON THE RIGHTS OF INDIGENOUS PEOPLES</head3>
+			<section2>Quick Start</section2>
+			<head4><![CDATA[I am a <br />Community Member]]></head4>
+			<head5>I work in Industry or Government</head5>
+			<head6>I work with/for indigenous communities</head6>
+			<section3>Featured Stories</section3>
+			<linkMore>Read more</linkMore>
+			<section4>----- How it Works -----</section4>
+			<button1>Learn More</button1>
+			<button2>See all resources</button2>
+			<button3>Go to learning module</button3>
+		</index>
+
+		<library>
+			<filter1>Author</filter1>
+			<filter2>Year</filter2>
+			<filter3>Language</filter3>
+			<filter4>Written By</filter4>
+			<filter5>Written For</filter5>
+			<filter6>Complexity</filter6>
+			<filter7>Content Type</filter7>
+            <filter8>Topic</filter8>
+			<buttonSearch>Search</buttonSearch>
+			<allWord>All</allWord>
+			<titleWord>Title</titleWord>
+			<desc>Desciption</desc>
+			<fileFormat>File Format</fileFormat>
+			<keywords>Keywords:</keywords>
+			<copyright>Copyright Information:</copyright>
+			<resources>Resources</resources>
+			<download>Download</download>
+            <ClickMe>Click Me</ClickMe>
+			<readpdf>Read PDF</readpdf>
+		</library>
+
+		<leftMenu>
+			<link4>Learning Module</link4>
+			<link5>Multimedia</link5>
+			<link6>Resource</link6>
+			<link7>Help</link7>
+		</leftMenu>
+
+		<navMenu>
+			<link8>Communities</link8>
+			<link9>Industry or Government</link9>
+			<link10>Community Organizers</link10>
+			<link11>Resources</link11>
+		</navMenu>
+
+</english>

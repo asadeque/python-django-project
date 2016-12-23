@@ -1,0 +1,115 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+
+<!--Library Data-->
+<div class="container resourcedata">
+  <div id="test1" class="col s12">
+   {% if CourseData %}
+    <div class="row">
+    {% for CourseData in CourseData %}
+        <div class="col s12 m12 l12">
+          <div class="card">
+            <div class="card-title center">
+              <p>COURSE : {{ CourseData.name|truncatechars:400 }}</p>
+            </div>
+            <div class="card-image">
+                {% if CourseData.imageURL %}
+                    <img src='{% static CourseData.imageURL|cut:"staticfiles" %}'/>
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <h5>Introduction</h5><span> {{ CourseData.description }}</span>
+            </div>
+            <div class="card-content">
+
+              {% if CourseData.complexity %}
+                <p>Complexity: {{ CourseData.complexity }}</p>
+              {% endif %}
+              {% if CourseData.duration %}
+                <p>Duration: {{CourseData.duration }} minutes</p>
+              {% endif %}
+              <p>Content:
+              {% for titleList in ContentTitle %}
+                {% if titleList.course_id == CourseData.id %}
+                  {{ titleList.title|truncatechars:20 }} ;
+                {% endif %}
+              {% endfor %}</p>
+            </div>
+            <div class="card-action">
+              <a href="/learnModule/contentsHome/{{ CourseData.pk }}">START FROM BEGINNING</a>
+              <a href="{{ CourseData.get_absolute_url }}">CONTINUE</a>
+            </div>
+          </div>
+
+         <div class="card">
+        {% for ContentList in ContentTitle %}
+        {% static "" as baseUrl %}
+          {% if ContentList.course_id == CourseData.id %}
+                 <div class="row">
+                        <div class="col s3 m3 l3  center">
+                            {% if ContentList.imageURL != '' %}
+                                <a href="/learnModule/contentHome/{{ ContentList.pk }}">
+                                    <img height=50 width=50 class="circle responsive-img"
+                                          src='{% static ContentList.imageURL|cut:"staticfiles"  %}' alt=""/>
+                                </a>
+                            {% else %}
+                                <a href="/learnModule/contentHome/{{ ContentList.pk }}">
+                                    <img height=50 width=50 class="circle responsive-img"
+                                          src='{{ baseUrl }}learnModule/images/{{ContentList.style.name}}.png' alt=""/>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="col s6 m6 l6 left">
+                            <span>Content {{forloop.counter}}: </span>{{ ContentList.title }} </br>
+                            <a href="/learnModule/contentHome/{{ ContentList.pk }}">{{ ContentList.author }}</a>
+                        </div>
+                          <div class="col s3 m3 l3 center">
+                              <span id="contenttitle" onclick="toogled({{forloop.counter}},'contentaccess')">
+                                <i class="material-icons md-36" id="contentaccess{{forloop.counter}}">arrow_drop_down</i>
+                            </span>
+                          </div>
+                        <div id="panel{{forloop.counter}}" class="headdiv row">
+                                    <div>
+                                        Access share share
+                                    </div>
+
+                            </div>
+
+                   <!--   <div class="card">
+                      <div class="card-action">
+                        <a class="col s3 m3 l3" href="/learnModule/contentHome/{{ ContentList.pk }}">ACCESS</a>
+                        <div class="col s3 m3 l3" style="display:inline" id="{{ContentList.id}}">
+                            <i  class="material-icons md-36 orange600 left"
+                                onclick="FavContent({{ContentList.id}},
+                                {% if ContentList.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %})">
+                                {% if ContentList.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                        </div>
+                        <div class="fixed-action-btn horizontal col push-s1 push-m5" style="display:inline">
+                          <a class="btn-floating md-36 red">
+                              <i class="material-icons">share</i>
+                          </a>
+                          <ul>
+                              <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                              <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                              <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ ContentList.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                          </ul>
+                          </div>
+                       </div>
+                      </div>-->
+                 </div>
+
+
+          {% endif %}
+        {% endfor %}
+        </div>
+           </div>
+
+    {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+

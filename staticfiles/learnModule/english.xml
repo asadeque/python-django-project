@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<english>
+        <headerMenu>
+            <title>FPIC.INFO</title>
+            <home>Home</home>
+            <fpic>FPIC</fpic>
+            <consult>Consultation</consult>
+            <stories>Stories</stories>
+            <blog>Blog</blog>
+            <search>Search</search>
+            <langword>Language</langword>
+			<logout>Logout</logout>
+            <account>My Account</account>
+            <profile>Profile</profile>
+			<login>Login</login>
+        </headerMenu>
+
+		<footerMenu>
+			<about>About us</about>
+            <research>Our Research</research>
+            <help>Help</help>
+            <contact>Contact Us</contact>
+            <faq>FAQ</faq>
+            <info>Information</info>
+            <partners>Partners</partners>
+            <wlu>Laurier University</wlu>
+            <snp>Six Nations Polytechnic</snp>
+            <lhu>Lakehead University</lhu>
+            <lu>Laval University</lu>
+            <ua>Universidad Austral</ua>
+            <copyr1>Made by </copyr1>
+            <copyr2>IRRG 2016 - This work is licensed under a Creative Commons Attribution 4.0 International License.
+                    This website has been partially funded by SSHRC and Wilfrid Laurier University.</copyr2>
+		</footerMenu>
+
+		<index>
+			<hptitle>Indigenous Peoples Have the Right to Decide</hptitle>
+            <hptitlem>Indigenous Peoples Have the Right to Decide</hptitlem>
+            <hpdesc1>Welcome.</hpdesc1>
+			<hpdesc2>The website was developed with and for Indigenous Peoples to advance access to and
+                     understanding of the right to Free, Prior and Informed Consent (FPIC) in relation to
+                     decisions about land and resource rights and responsibilities, and community development.</hpdesc2>
+			<lm>LEARN MORE</lm>
+            <panelpara1bold>Indigenous peoples have the right to self-determination. By virtue of that right they freely
+                  determine their political status and freely pursue their economic, social and cultural development. </panelpara1bold>
+            <panelpara1>(The United Nations Declaration on the Rights of Indigenous Peoples, Article 3)</panelpara1>
+            <panelpara2>The United Nations Declaration on the Rights of Indigenous peoples sets </panelpara2>
+            <panelpara2bold>“the minimum standard for the survival, dignity and well-being of the indigenous peoples of the world”. </panelpara2bold>
+            <panelpara22>The minimum standard includes the right to self-determination. This means the right of Indigenous Nations to make decisions for their own communities. Indigenous Peoples have the right to choose their own economic, social, and cultural development. The right to self-determination is also protected through the right to Free Prior and Informed Consent.</panelpara22>
+
+            <panelpara3bold1>The right to Free, Prior and Informed Consent (FPIC) is outlined in the United Nations Declaration on
+                                the Rights of Indigenous Peoples (UNDRIP) and in the International Labour Organization’s convention 169
+                                (ILO 169). </panelpara3bold1>
+            <panelpara3> However, the inherent rights of self-determination and free prior and informed consent are
+                                poorly understood by industry and government, often inaccessible to Indigenous communities, and rarely
+                                practiced in good faith. </panelpara3>
+            <panelpara3bold2>That is why the Indigenous Knowledge Centre, Deyohahagé, is hosting this website.
+                                   We are making information available to Indigenous communities and anyone who is interested in Indigenous
+                                   rights to Free Prior and Informed Consent.</panelpara3bold2>
+            <card11>This website provides information and resources on FPIC as a tool of self-determination to assist communities in decision making. We have selected articles, tool kits, videos, voice messages, and community stories about FPIC and Consultation. The website is hosted by Deyohahagé the </card11>
+            <card1link>Indigenous Knowledge Centre at Six Nations Polytechnic in the territory of Six Nations of the Grand, </card1link>
+            <card12>Oshwekan, Ontario, Canada. Deyohahagé means learning from the two rows by sharing the strengths of both Indigenous and Western knowledge.</card12>
+            <card21>The website provides information about Indigenous rights and resources with learning tools that can be shared with communities. </card21>
+            <card2bold>Let us introduce you to Marcos and Maria. See how they use the website to gather information about FPIC and to share it with their communities to support decision making that is rooted in their cultural values, rights, and interests.</card2bold>
+		</index>
+
+		<fpicPage>
+            <fpicTitle>What the F is FPIC?</fpicTitle>
+            <para1>Free Prior and Informed Consent (FPIC) is the right that Indigenous communities have to say “yes”
+                 or “no” to mining, forestry, petroleum, water, or other project proposals that will affect their
+                 territories. FPIC is the right to have the required information and the necessary time to make
+                 decisions consistent with each Indigenous community’s own values, beliefs, customs, needs
+                 and priorities.</para1>
+            <boldpara1>You will find articles and other resources here on the right to Free Prior and Informed Consent.</boldpara1>
+            <miniCourse>MINI-COURSES</miniCourse>
+            <fpicpanelpara1>The aim of Free Prior Informed consent (FPIC), is to establish bottom up participation and
+                        consultation of an Indigenous Population prior to the beginning of a development on ancestral
+                        land or using resources within the Indigenous Population's territory.[1] Indigenous people (IP)
+                        have a special connection to their land and resources, they inhabit 20% of the earth's surface,
+                        these areas are environmentally rich in both renewable and non-renewable resources.[2]</fpicpanelpara1>
+            <fpicpanelpara2>The collective ownership style of most Indigenous Peoples conflicts with the modern global market
+                                and its continuous need for resources and land. To protect Indigenous peoples rights, international
+                                human rights law has created process and standards to safeguard their way of life and to encourage
+                                participation in the decision making process. One of these methods is the process of FPIC.</fpicpanelpara2>
+            <fpicpanelpara3>There is criticism that many international conventions and treaties only require consultation
+                                and not consent, which is a much higher threshold. Without the requirement for consent Indigenous
+                                People are not able to veto government projects and developments in their area which directly
+                                affects their lives and cultures. FPIC allows Indigenous Peoples to have the right to self-determination
+                                and self-governance in national and local government decision making process over projects that concern
+                                their lives and resources.</fpicpanelpara3>
+            <highresourcetitle>Highlighted Resources</highresourcetitle>
+            <fpicall>ALL</fpicall>
+            <fpictoolkit>TOOLKIT</fpictoolkit>
+            <fpicinfo>INFORMATION</fpicinfo>
+            <more>MORE LIKE THIS</more>
+      </fpicPage>
+		<consultPage>
+            <consultTitle>Indigenous Consultation</consultTitle>
+            <para1>Governments must engage in consultations with communities in order to seek informed decisions in which community leaders have the right to either agree or disagree to a proposed development project. Communities can decide to either provide, or withhold their consent.</para1>
+            <boldpara1>You will find articles and other resources here on the duty to consult and the processes of consultation.
+            </boldpara1>
+            <miniCourse>MINI-COURSES</miniCourse>
+            <consultpanelpara1>In Canada, the duty to consult and accommodate with Aboriginal peoples arises when the Crown contemplates actions or decisions that may affect an Aboriginal person's Aboriginal or Treaty rights.[1] This duty arises most often in the context of natural resource extraction such as mining, forestry, oil, and gas.</consultpanelpara1>
+            <consultpanelpara2>It is very difficult to practically separate the duty to consult and accommodate because consultation may lead to the fulfillment of the duty to accommodate [2] and consultation is meaningless if accommodation is excluded from the outset.[3] As such, the two are intertwined and must be addressed together.</consultpanelpara2>
+            <consultpanelpara3>The broad purpose of the duty to consult and accommodate is to advance the objective of reconciliation of pre-existing Aboriginal societies with the assertion of Crown Sovereignty. This duty flows from the honour of the Crown and its fiduciary duty to Indigenous peoples.[4] The obligation to provide consultation and a decision-making process that is compatible with the honour of the Crown is embedded in Section Thirty-five of the Constitution Act, 1982 and Treaties. In a Treaty context, the duty to consult serves to remedy “a procedural gap” in the Treaty.[5]</consultpanelpara3>
+            <consultpanelpara4>The Supreme Court of Canada has acknowledged that there are gaps in the texts of historical numbered treaties. This means that the oral negotiations surrounding treaty negotiations are necessary to fully understand the rights and obligations to which treaties give rise.</consultpanelpara4>
+            <highresourcetitle>Highlighted Resources</highresourcetitle>
+            <consultall>ALL</consultall>
+            <consulttoolkit>TOOLKIT</consulttoolkit>
+            <consultinfo>INFORMATION</consultinfo>
+            <more>MORE LIKE THIS</more>
+      </consultPage>
+
+        <storyPage>
+            <consultTitle>Learning from other Communities</consultTitle>
+            <para1> A very brief text which explains what this section is about: how important is to look at other peoples' experiences and take notice of the different actors involved, outcomes, etc.</para1>
+            <storyall>ALL</storyall>
+            <storygood>GOOD</storygood>
+            <storybad>BAD</storybad>
+            <storyugly>UGLY</storyugly>
+            <more>Learn More</more>
+      </storyPage>
+
+
+</english>

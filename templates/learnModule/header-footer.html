@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>IRRG</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		{% load static %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{% static 'learnModule/js/bootstrap.min.js' %}"></script>
+		<!--<script src="{% static 'learnModule/js/jquery.min.js' %}"></script>-->
+		<script src="{% static 'learnModule/js/skel.min.js' %}"></script>
+		<script src="{% static 'learnModule/js/skel-layers.min.js' %}"></script>
+		<script src="{% static 'learnModule/js/init.js' %}"></script>
+        <script src="{% static 'learnModule/js/custom.js' %}"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/custom.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/skel.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/style-xlarge.css' %}" />
+	<!--	<link rel="stylesheet" type="text/css" href="{% static 'css/style-medium.css' %}" />-->
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/style-small.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/style-xsmall.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/style-large.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'learnModule/css/custom-index.css' %}" />
+
+	</head>
+
+	<body id="top">
+
+   <!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+             <h1><a href="/" id="title"></a></h1>
+				<nav id="nav">
+                    <ul>
+                        <li>
+							<form method="post" action="/learnModule/library/" name="Search-form">
+								{% csrf_token %}
+								<input type="search" class="searchinput" name="SearchinLibrary" id="searchPlaceholder" />
+								<button type="submit" class="icon fa-search searchbutton"></button>
+							</form>
+                        </li>
+                        <li>
+                          <div data-toggle="dropdown">
+                              <a href="#" id="langword"></a>
+                           </div>
+                          <ul class="dropdown-menu">
+                            <li><a href="/learnModule/indexsp">Spanish</a></li>
+                            <li><a href="/">English</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="/learnModule/help" id="help"> </a></li>
+
+                              <!--<i class="icon fa-flag"></i>-->
+                       <!-- <i class="icon fa-question-circle"></i> -->
+                       	<!--
+							<li><a href="/users/" class="button special">
+							<i class="icon fa-user"></i></a></li>
+							-->
+					</ul>
+				</nav>
+			</header>
+
+<!-- Four -->
+
+					{% block content %}
+					{% endblock %}
+
+
+<!-- Footer -->
+					<footer id="footer">
+			<div class="container">
+				<div class="row double">
+					<div class="12u">
+						<div class="row collapse-at-2">
+							<div class="5u">
+								<h3 id="sectionheading"></h3>
+								<ul class="alt">
+									<li><a href="/learnModule/IRRG" id="Link1"></a></li>
+                                    <li><a href="/learnModule/Deyohaha/" id="Link2"></a></li>
+								</ul>
+							</div>
+							<div class="3u">
+								<h3 id="sectionheading2"></h3>
+								<ul class="alt">
+									{% static "" as baseUrl %}
+									<li><a href="http://www.snpolytechnic.com/" target="_blank" class="logo" style="width=20%; height=20%">
+                                    <img src="{{ baseUrl }}learnModule/images/6 nations polytechnic logo.png" alt=""/></a></li>
+									<li><a href="https://www.wlu.ca/" target="_blank" class="logo" style="width=20%; height=20%">
+                                        <img src="{{ baseUrl }}learnModule/images/WLU.png" alt=""/></a></li>
+									<li><a href="http://www2.ulaval.ca/" target="_blank" class="logo" style="width=20%; height=20%">
+                                        <img src="{{ baseUrl }}learnModule/images/logo-universite-laval.jpg" alt=""/></a></li>
+									<li><a href="https://www.lakeheadu.ca/" target="_blank" class="logo" style="width=20%; height=20%">
+                                        <img src="{{ baseUrl }}learnModule/images/Lakehad university.png" alt=""/></a></li>
+									<li><a href="https://www.uach.cl/" target="_blank" class="logo" style="width=20%; height=20%">
+                                        <img src="{{ baseUrl }}learnModule/images/u_austral_logo.jpg" alt=""/></a></li>
+								</ul>
+							</div>
+						<!--<div class="3u">
+								<h3>CONTACT US</h3>
+								<ul class="icons">
+									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon fa-instag ram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+								</ul>
+							</div>-->
+							<div class="4u">
+							   <h3 id="sectionheading3"></h3>
+                                <ul class="icons">
+									{% static "" as baseUrl %}
+									<li><a href="http://www.sshrc-crsh.gc.ca/home-accueil-eng.aspx" target="_blank" style="width=20%; height=20%">
+                                        <img height="40%" width="40%" src="{{ baseUrl }}learnModule/images/SSHRC.jpg" alt=""/></a></li>
+									<li><a href="https://www.wlu.ca/" target="_blank" class="logo" style="width=20%; height=20%"><img src="{{ baseUrl }}learnModule/images/WLU.png" alt=""/></a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+
+
+	<script type="text/javascript">
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this);
+                    }
+                };
+
+             	var lang = {{ request.session.language }};
+				if(lang == 1)
+				{
+					lang = 'spanish';
+				}
+				else if (lang  == 2)
+				{
+					lang = 'english';
+				}
+				else
+				{
+					lang = 'english';
+				}
+
+                xhttp.open("GET", "http://localhost:8000/static/learnModule/"+lang+".xml", true);
+                xhttp.send();
+
+                function myFunction(xml)
+                 {
+                    var xmlDoc = xml.responseXML;
+                    var headerMenu = xmlDoc.getElementsByTagName("headerMenu");
+					document.getElementById("title").innerHTML = headerMenu[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+					document.getElementById("searchPlaceholder").placeholder =
+					headerMenu[0].getElementsByTagName('searchPlaceholder')[0].firstChild.nodeValue;
+					document.getElementById("langword").innerHTML =
+					headerMenu[0].getElementsByTagName('langword')[0].firstChild.nodeValue;
+					document.getElementById("help").innerHTML =
+					headerMenu[0].getElementsByTagName('help')[0].firstChild.nodeValue;
+
+					var footerMenu = xmlDoc.getElementsByTagName("footerMenu");
+					document.getElementById("sectionheading").innerHTML =
+					 footerMenu[0].getElementsByTagName('sectionheading')[0].firstChild.nodeValue;
+					document.getElementById("Link1").innerHTML =
+					footerMenu[0].getElementsByTagName('Link1')[0].firstChild.nodeValue;
+					document.getElementById("Link2").innerHTML =
+					footerMenu[0].getElementsByTagName('Link2')[0].firstChild.nodeValue;
+					document.getElementById("sectionheading2").innerHTML =
+					footerMenu[0].getElementsByTagName('sectionheading2')[0].firstChild.nodeValue;
+					document.getElementById("sectionheading3").innerHTML =
+					footerMenu[0].getElementsByTagName('sectionheading3')[0].firstChild.nodeValue;
+
+					if(document.getElementById("navMenu"))
+					{
+						var navMenu = xmlDoc.getElementsByTagName("navMenu");
+						document.getElementById("link8").innerHTML =
+							 navMenu[0].getElementsByTagName('link8')[0].firstChild.nodeValue;
+						document.getElementById("link9").innerHTML =
+							navMenu[0].getElementsByTagName('link9')[0].firstChild.nodeValue;
+						document.getElementById("link10").innerHTML =
+							navMenu[0].getElementsByTagName('link10')[0].firstChild.nodeValue;
+						document.getElementById("link11").innerHTML =
+							navMenu[0].getElementsByTagName('link11')[0].firstChild.nodeValue;
+					}
+
+					if(document.getElementById("leftMenu"))
+					{
+						var leftMenu = xmlDoc.getElementsByTagName("leftMenu");
+						document.getElementById("link4").innerHTML =
+							 leftMenu[0].getElementsByTagName('link4')[0].firstChild.nodeValue;
+						document.getElementById("link5").innerHTML =
+							leftMenu[0].getElementsByTagName('link5')[0].firstChild.nodeValue;
+						document.getElementById("link6").innerHTML =
+							leftMenu[0].getElementsByTagName('link6')[0].firstChild.nodeValue;
+						document.getElementById("link7").innerHTML =
+							leftMenu[0].getElementsByTagName('link7')[0].firstChild.nodeValue;
+					}
+
+
+					if(document.getElementById("filterMenu"))
+					{
+						var library = xmlDoc.getElementsByTagName("library");
+						document.getElementById("filter1").innerHTML =
+							 library[0].getElementsByTagName('filter1')[0].firstChild.nodeValue;
+						document.getElementById("filter2").innerHTML =
+							library[0].getElementsByTagName('filter2')[0].firstChild.nodeValue;
+						document.getElementById("filter3").innerHTML =
+							library[0].getElementsByTagName('filter3')[0].firstChild.nodeValue;
+						document.getElementById("filter4").innerHTML =
+							library[0].getElementsByTagName('filter4')[0].firstChild.nodeValue;
+							document.getElementById("filter5").innerHTML =
+							library[0].getElementsByTagName('filter5')[0].firstChild.nodeValue;
+							document.getElementById("filter6").innerHTML =
+							library[0].getElementsByTagName('filter6')[0].firstChild.nodeValue;
+							document.getElementById("filter7").innerHTML =
+							library[0].getElementsByTagName('filter7')[0].firstChild.nodeValue;
+					}
+
+					if(document.getElementById("ContentDetailPage"))
+					{
+						var library = xmlDoc.getElementsByTagName("library");
+							document.getElementById("filter4").innerHTML =
+							library[0].getElementsByTagName('filter4')[0].firstChild.nodeValue;
+							document.getElementById("filter5").innerHTML =
+							library[0].getElementsByTagName('filter5')[0].firstChild.nodeValue;
+							document.getElementById("filter6").innerHTML =
+							library[0].getElementsByTagName('filter6')[0].firstChild.nodeValue;
+							document.getElementById("filter7").innerHTML =
+							library[0].getElementsByTagName('filter7')[0].firstChild.nodeValue;
+							document.getElementById("filter8").innerHTML =
+							library[0].getElementsByTagName('filter8')[0].firstChild.nodeValue;
+							document.getElementById("desc").innerHTML =
+							library[0].getElementsByTagName('desc')[0].firstChild.nodeValue;
+							document.getElementById("fileFormat").innerHTML =
+							library[0].getElementsByTagName('fileFormat')[0].firstChild.nodeValue;
+							document.getElementById("keywords").innerHTML =
+							library[0].getElementsByTagName('keywords')[0].firstChild.nodeValue;
+							document.getElementById("copyright").innerHTML =
+							library[0].getElementsByTagName('copyright')[0].firstChild.nodeValue;
+
+
+					}
+					if(document.getElementById("download"))
+					{
+							document.getElementById("download").innerHTML =
+							library[0].getElementsByTagName('download')[0].firstChild.nodeValue;
+					}
+					if(document.getElementById("ClickMe"))
+					{
+							document.getElementById("ClickMe").innerHTML =
+							library[0].getElementsByTagName('ClickMe')[0].firstChild.nodeValue;
+					}
+
+					var lengthContent = $('[id^=desc]').length;
+					for(i=1;i<=lengthContent;i++)
+					{
+						document.getElementById("desc"+[i]).innerHTML =
+										library[0].getElementsByTagName('desc')[0].firstChild.nodeValue;
+					}
+             }
+
+
+        </script>

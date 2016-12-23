@@ -1,0 +1,18 @@
+HOW TO WORK
+
+Title:  Todos los recursos
+ImageURL:   Matawa.jpg
+Body:   ¿No sabes por dónde empezar o qué buscar? Un equipo multidisciplinario Intercultural y ha organizado el contenido CLPI para usted. Usted puede aprender y probar sus conocimientos sobre temas específicos.
+Language: Spanish
+
+Title:  Nuestra investigación
+ImageURL:   Rise of the 4th world conference round table discussions.jpg
+Body:   Este sitio web fue diseñado para proporcionar la mejor información sobre derechos, recursos y procesos de consulta y consentimiento, tanto desde una perspectiva occidental y el conocimiento indígena.
+Language: Spanish
+
+Title:  Nuestro acercamiento
+ImageURL:   Rise of the 4th world conference Opening Ceremony.png
+Body:   Trabajamos directamente con las comunidades de la región Panamericana para conocer sus experiencias sobre el consentimiento libre, previo e informado.
+Language: Spanish
+
+

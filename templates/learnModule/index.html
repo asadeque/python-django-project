@@ -1,0 +1,191 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+<style>
+#index-banner
+{
+    background: url("../static/learnModule/images/banner.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+}
+#panel1
+{
+  display:none;
+}
+
+</style>
+<div id="indexpage">
+  <div class="section no-pad-bot" id="index-banner">
+      <div class="right">
+        <img src="../../static/learnModule/images/u78.PNG" height="425px">
+      </div>
+      <div class="container resourcedata">
+             <div class="row">
+                <div class="col s12 m12">
+                  <div class="card">
+                    <div class="card-title center">
+                          <strong id="hptitle"></strong>
+                    </div>
+                    <div class="card-content">
+                       <p id="hpdesc1"></p>
+                       <p id="hpdesc2"></p>
+                        <br/><br/>
+                           <span id="hpcontent" class="left">
+                                <span class="orange-text left" id="lm"></span>
+                            </span>
+                            <br/>
+                        <div id="panel1" class="card-content">
+                            <p><b id="panelpara1bold"></b><span id="panelpara1"></span></p>
+                            <br/>
+                            <p><span id="panelpara2"></span><b id="panelpara2bold"></b><span id="panelpara22"></span></p>
+                            <br/>
+                            <p><b id="panelpara3bold1"></b><span id="panelpara3"></span><b id="panelpara3bold2"></b></p>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+       </div>
+  </div>
+<div class="container">
+    <!-- offers-->
+    <div class="section">
+      <div class="row">
+          <div class="col s12 m6">
+              <div class="card">
+                    <div class="card-image">
+                      <img class="large cardimages" src="../static/learnModule/images/u141.jpg">
+                    </div>
+                  <div class="card-content">
+                      <!--<span class="card-title cardcontent">High quality information</span>-->
+                      <br/><br/>
+                       <span id="card11"></span><a class="orange-text" href="http://www.snpolytechnic.com/index.php/2014-02-19-20-45-31"
+                       target=_blank id="card1link"></a><span id="card12"></span>
+                    </div>
+                    <!--<div class="card-action">
+                      <a href="#">Learn More</a>
+                    </div>-->
+              </div>
+           </div>
+
+          <div class="col s12 m6">
+              <div class="card">
+                    <div class="card-image">
+                      <img class="large cardimages" src="../static/learnModule/images/u154.jpg">
+                    </div>
+
+                    <div class="card-content ">
+                      <!--<span class="card-title cardcontent">Designed for you</span>-->
+                        <br/><br/>
+                          <span id="card21"></span><b id="card2bold"></b>
+                    </div>
+                    <!--<div class="card-action">
+                      <a href="#">Learn More</a>
+                    </div>-->
+              </div>
+           </div>
+
+          <!--<div class="col s12 m4">
+              <div class="card">
+                    <div class="card-image">
+                      <img class="large cardimages" src="static/learnModule/images/u163.jpg">
+                    </div>
+                    <div class="card-content ">
+                      <span class="card-title cardcontent">You own this website</span>
+                        <br/><br/>
+                      Doesn't matter if you come from North or South America, if you or your community is looking for FPIC information, this website is yours.
+                    </div>
+                    <div class="card-action">
+                      <a href="#">Learn More</a>
+                    </div>
+              </div>
+           </div>-->
+
+      </div>
+    </div>
+
+
+<div class="hide" style="height:640px;">
+<div class="slider" style="height:640px;">
+    <ul class="slides" style="height:640px;">
+      <li>
+        <img src="static/learnModule/images/u7.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u16.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u14.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u12.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u10.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u8.png"> <!-- random image -->
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="hide"  style="height:640px;">
+<div class="slider" style="height:640px;">
+    <ul class="slides" style="height:640px;">
+      <li>
+        <img src="static/learnModule/images/u136.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u146.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u144.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u142.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u140.png"> <!-- random image -->
+      </li>
+      <li>
+        <img src="static/learnModule/images/u138.png"> <!-- random image -->
+      </li>
+    </ul>
+  </div>
+
+   <div class="card hide">
+    <div class="carousel carousel-slider" style="height:400px;">
+
+        <div class="carousel-item" >
+           <div><img src="../static/learnModule/images/u6.PNG"  height="285px" >
+            <div style="width:100%;margin:10px">We worked directly with communities in the Pan-Ameriacan region to learn about
+    their experiences on Free, Prior and Imformed consent.</div>
+               </div>
+        </div>
+
+          <div class="carousel-item" >
+          <div> <img src="../static/learnModule/images/u28.PNG"  height="285px">
+            <div style="width:100%;margin:10px">We collect information about Free,Prior and Informed Consent from across the internet and catalogs them for you to find it. </div>
+
+         </div>
+          </div>
+
+
+          <div class="carousel-item" >
+          <div> <img src="../static/learnModule/images/u17.PNG"  height="285px">
+          <div style="width:100%;margin:10px">Don't know where to start or what to look for? A multisciplinary and intercultural team has organized content for you to learn and test your knowledge about specific topics.</div>
+            </div>
+          </div>
+
+         </div>
+
+</div>
+
+
+</div>
+</div>
+ {% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+{% include 'learnModule/content-menu.html' %}
+ {% csrf_token %} <div class="jumbotron">
+  <div class="text-center">
+           <div class="pageTitle">Teaching Resources</div>
+  </div>
+</div>
+
+<!-- SHOW RESOURCES   -->
+    <section id="four" class="wrapper style1">
+        <div class="container">
+            <div class="col-md-12 col-md-push-1">
+            <div class="row">
+                <div class="col-md-2 well">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <h2>SOURCE</h2>
+                    <section>
+                        {% if source1 %}
+                            <div class="row">
+                                {% for srcs in source1 %}
+                                    <div class="checkbox check-success checkbox-circle">
+                                        <input type="checkbox" name="source[]" value="{{ srcs.id }}" id="source{{ srcs.id }}">
+                                        <label for="source{{ srcs.id }}">{{ srcs.name }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No sources are available.</p>
+                        {% endif %}
+                    </section>
+                    <h5>Resource Type</h5>
+                    <section>
+                        {% if resourceType1 %}
+                            <div class="row">
+                                {% for srcs in resourceType1 %}
+                                    <div class="checkbox check-success checkbox-circle">
+                                        <input type="checkbox" name="resource[]" value="{{ srcs.id }}" id="resource{{ srcs.id }}">
+                                        <label for="resource{{ srcs.id }}">{{ srcs.name }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No sources are available.</p>
+                        {% endif %}
+                    </section>
+                    <h5>Language</h5>
+                    <section>
+                        {% if language1 %}
+                            <div class="row">
+                                {% for srcs in language1 %}
+                                    <div class="checkbox check-success checkbox-circle">
+                                        <input type="checkbox" name="lang[]" value="{{ srcs.id }}" id="lang{{ srcs.id }}">
+                                        <label for="lang{{ srcs.id }}">{{ srcs.name }}</label>
+                                    </div>
+                                    {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No sources are available.</p>
+                        {% endif %}
+                    </section>
+                    <section>
+                        <div class="row">
+                            <div class="checkbox check-success checkbox-circle">
+                                <input type="submit" name="submit" value="Search">
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+            <!-- Course Specific Content Details -->
+                <div class="col-md-9">
+                   <section>
+                        {% if latest_course %}
+                            <div class="row">
+                                {% for course in latest_course %}
+                                    <div class="col-md-3 ResourceData well">
+                                        <div>
+                                            <h2>{{ course.name }}</h2>
+                                        </div>
+                                        {% static "" as baseUrl %}
+                                        <a  href="/learnModule/courseMain/{{ course.pk }}" class="image fit">
+
+                                        <img style="border-radius:0px; !important"
+                                             src='{% static course.imageURL|cut:"staticfiles"  %}' alt=""/></a>
+                                        <div>
+                                            <h6>{{ course.description }}</h6>
+                                        </div>
+                                        {% if CFC %}
+                                                {% if course.pk in CFC %}
+                                                <a href="/learnModule/DelFavouriteCourse/{{course.pk}}" class="button special">
+                                                        <i class="icon fa fa-remove fa-3x"></i>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="/learnModule/FavouriteCourse/{{course.pk}}" class="button special">
+                                                        <i class="icon fa fa-bookmark fa-3x"></i>
+                                                    </a>
+                                                {% endif %}
+                                        {% else %}
+                                                    <a href="/learnModule/FavouriteCourse/{{course.pk}}" class="button special">
+                                                        <i class="icon fa fa-bookmark fa-3x"></i>
+                                                    </a>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No content are available.</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+ {% endblock %}

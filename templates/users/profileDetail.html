@@ -1,0 +1,549 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block content %}
+{% include "blog/messages_display.html" %}
+
+<style>
+#index-banner
+{
+    background: url("../../static/learnModule/images/bg.jpg") no-repeat 100% center;
+    background-size: cover;
+    width: 100%;
+    height: 190px;
+}
+#index-banner2
+{
+    background: url("../../static/learnModule/images/blank.jpg") 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+    display:block;
+}
+.mydiv
+{
+display:none;
+}
+
+</style>
+
+
+  <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+              <div class="row">
+                  <div class="myavtarimage">
+              {% if uform.instance.image %}
+                  <img class="myimage" src='{% static uform.instance.image.url|cut:"staticfiles" %}'/>
+                        {%else%}
+                   <img class="myimage" src="../../static/learnModule/images/avtar.png" >
+              {% endif %}
+                </div>
+              </div>
+              <div class="row">
+                  <div class="white-text left">
+                    {{ uform.firstName.value }} <br/>
+                    {{ uform.email.value }} <br/>
+                 </div>
+               <div>
+                   <a class="waves-effect waves-light right orange-text" href="#modal1">EDIT</a>
+               </div>
+             </div>
+    </div>
+  </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+           <div class="container">
+                 <div class="row">
+            <form method='POST' class="col s12 m12 l10 push-l1"  action='/users/EditProfile/' enctype='multipart/form-data'>
+            {% csrf_token %}
+             <h4>EDIT PROFILE</h4>
+
+                 <div class="row center">
+                        <div>
+                        {% if uform.instance.image %}
+                            <img class="editimage circle" src='{% static uform.instance.image.url|cut:"staticfiles" %}'/>
+
+                        {%else%}
+                             <img class="editimage circle" src="../../static/learnModule/images/avtar.png" >
+                         {% endif %}
+
+                            <div class="image-upload  uploadimage" style="">
+                                <label for="file-input">
+                                     <i class="material-icons md-48">add_circle</i>
+                                </label>
+                                <input id="file-input" type="file" name="image"/>
+                            </div>
+                        </div>
+                      <div class="center">{{ uform.image.label }}</div>
+                    </div>
+                 <div class="row">
+                    <div class="input-field">
+                        {{ uform.firstName }}
+                      <label for="id_firstName">{{ uform.firstName.label }}</label>
+                    </div>
+     		      </div>
+                 <div class="row">
+                    <div class="input-field">
+                        {{ uform.email }}
+                      <label for="id_email"> {{ uform.email.label }}</label>
+                    </div>
+     		      </div>
+                <div class="row">
+                    <div class="input-field">
+                        {{ uform.profileHighlight }}
+                      <label for="id_profileHighlight"> {{ uform.profileHighlight.label }}</label>
+                    </div>
+     		      </div>
+                <div class="row">
+                    <div class="input-field">
+                        {{ uform.password }}
+                      <label for="id_password"> {{ uform.password.label }}</label>
+                    </div>
+     		    </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="password" id="id_passwordc" maxlength="256" name="passwordc">
+                      <label for="id_passwordc"> Repeat Password</label>
+                    </div>
+     		      </div>
+                <div class="row center">
+                    <div class="input-field">
+                        <input class="waves-effect waves-light btn" type="submit" name="submit" value="SUBMIT" />
+                    <div class="modal-action modal-close waves-effect waves-light btn">CANCEL</div>
+                    </div>
+     		      </div>
+             </form>
+         </div>
+         </div>
+    </div>
+  </div>
+{% if dataResource or dlResource or favResource or dataContent or learnedContent or favContent %}
+<div class="container resourcedata">
+ <nav class="nav-extended">
+    <div class="nav-wrapper">
+      <ul class="tabs tabs-transparent ">
+        <li class="tab"><a class="active" href="#test1">ALL RESOURCES</a></li>
+       {% if dlResource %}
+            <li class="tab"><a href="#test2">DOWNLOADED</a></li>
+        {% endif %}
+        {% if favResource %}
+        <li class="tab"><a href="#test3">LIBRARY</a></li>
+        {% endif %}
+{% comment %}
+        {% if dataContent %}
+        <li class="tab"><a href="#test4">ALL CONTENT</a></li>
+         {% endif %}
+        {% if learnedContent %}
+        <li class="tab"><a href="#test5">LESSONS</a></li>
+        {% endif %}
+{% endcomment %}
+        {% if favContent %}
+        <li class="tab"><a href="#test6">CONTENT</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  <div id="test1">
+
+  {% if dataResource %}
+  {% for data in dataResource %}
+
+   <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel ">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+             <img src="" alt="" class="circle responsive-img">
+                {% if data.imageURL != '' %}
+              <a href="/library/libraryDetails/{{data.id}}"> <img src='{% static data.imageURL|cut:"staticfiles" %}' alt="" class="circle responsive-img">
+                </a>{% else %}
+              <a href="/library/libraryDetails/{{data.id}}"> <img src="../../static/learnModule/images/{{data.LibraryType__name}}.png" alt="" class="circle responsive-img">
+                </a>{% endif %}
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+              <a href="/library/libraryDetails/{{data.id}}" class="black-text"> {% if data.title %}
+                {{ data.title|truncatechars:80 }}</br>
+                {% endif %}
+                {% if data.description %}
+                    {{ data.description|truncatechars:50 }}</br>
+                {% endif %}</a>
+                </div>
+               <div class="hide-on-med-and-up">
+               <a href="/library/libraryDetails/{{data.id}}"  class="black-text"> {% if data.title %}
+                {{ data.title|truncatechars:50 }}</br>
+                {% endif %}</a>
+
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                  <i class="material-icons md-48" id="test1{{data.id}}" onclick="tooglediv({{data.id}},'test1')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{data.id}}test1">
+               <div class="row">
+                  <div class="col s4">
+                      {% if data.userresourcedownload__type == 'DR' and data.userfavouriteresource__type == None %}
+                                <a href="/library/DelDownloadedResource/{{data.id}}" class="orange-text">DELETE</a>
+                            {% elif data.userresourcedownload__type == 'DR' and data.userfavouriteresource__type == 'FR' %}
+                                <a href="/library/DelDownloadedResource/{{data.id}}" class="orange-text" >DELETE</a>
+                            {% elif data.userresourcedownload__type == None and data.userfavouriteresource__type == 'FR' %}
+                                <a href="/library/UnFavourite/{{data.id}}" class="orange-text" >DELETE</a>
+                            {% endif %}
+                    </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+
+                   </div>
+                   <div class="col s4"><a href="/library/" class="right orange-text">MORE</a></div>
+                </div>
+
+
+           </div>
+       </div>
+ </div>
+
+    {% endfor %}
+    {% endif %}
+
+  </div>
+  <div id="test2" class="col s12 m12 l12">
+{% if dlResource %}
+  {% for dlResource in dlResource %}
+      <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+             <img src="" alt="" class="circle responsive-img">
+                {% if dlResource.imageURL != '' %}
+              <a href="/library/libraryDetails/{{dlResource.id}}"> <img src='{% static dlResource.imageURL|cut:"staticfiles" %}' alt="" class="circle responsive-img">
+                </a>{% else %}
+              <a href="/library/libraryDetails/{{dlResource.id}}"> <img src="../../static/learnModule/images/{{dlResource.LibraryType__name}}.png" alt="" class="circle responsive-img">
+                </a>{% endif %}
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+                <a href="/library/libraryDetails/{{dlResource.id}}" class="black-text">{% if dlResource.title %}
+                {{ dlResource.title|truncatechars:80 }}</br>
+                {% endif %}
+                {% if dlResource.description %}
+                    {{ dlResource.description|truncatechars:50 }}</br>
+                {% endif %}</a>
+                </div>
+               <div class="hide-on-med-and-up">
+              <a href="/library/libraryDetails/{{dlResource.id}}" class="black-text">  {% if dlResource.title %}
+                {{ dlResource.title|truncatechars:50 }}</br>
+                {% endif %}</a>
+
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                  <i class="material-icons md-48" id="test2{{dlResource.id}}" onclick="tooglediv({{dlResource.id}},'test2')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{dlResource.id}}test2">
+               <div class="row">
+                  <div class="col s4">
+                      <a href="/library/DelDownloadedResource/{{dlResource.id}}" class="orange-text">DELETE</a>
+                  </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+                  </div>
+                   <div class="col s4">
+                       <a href="/library/" class="right orange-text">MORE</a>
+                   </div>
+               </div>
+
+             </div>
+          </div>
+ </div>
+{% endfor %}
+    {% endif %}
+  </div>
+  <div id="test3" class="col s12 m12 l12">
+    {% if favResource %}
+{% for favResource in favResource %}
+
+      <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel ">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+                {% if favResource.imageURL != '' %}
+            <a href="/library/libraryDetails/{{favResource.id}}">   <img src='{% static favResource.imageURL|cut:"staticfiles" %}' alt="" class="circle responsive-img">
+              </a>  {% else %}
+               <a href="/library/libraryDetails/{{favResource.id}}"><img src="../../static/learnModule/images/{{favResource.LibraryType__name}}.png" alt="" class="circle responsive-img">
+               </a> {% endif %}
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+               <a href="/library/libraryDetails/{{favResource.id}}" class="black-text">
+                   {% if favResource.title|truncatechars:80 %}
+                  {{ favResource.title }}</br>
+              {% endif %}
+              {% if favResource.description %}
+                  {{ favResource.description|truncatechars:50 }}</br>
+              {% endif %}</a>
+
+                </div>
+               <div class="hide-on-med-and-up">
+                <a href="/library/libraryDetails/{{favResource.id}}" class="black-text">{% if favResource.title %}
+                {{ favResource.title|truncatechars:50 }}</br>
+                {% endif %}</a>
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                    <i class="material-icons md-48" id="test3{{favResource.id}}"
+                    onclick="tooglediv({{favResource.id}},'test3')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{favResource.id}}test3">
+                 <div class="row">
+                  <div class="col s4">
+                      <a href="/library/UnFavourite/{{favResource.id}}" class="orange-text">DELETE</a>
+                  </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+                  </div>
+                   <div class="col s4">
+                       <a href="/library/" class="right orange-text">MORE</a>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+ </div>
+{% endfor %}
+    {% endif %}
+  </div>
+{% comment %}
+  <div id="test4" class="col s12 m12 l12">
+{% if dataContent %}
+  {% for dataContent in dataContent %}
+
+      <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel ">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+             <img src="" alt="" class="circle responsive-img">
+
+                {% if dataContent.imageURL != '' %}
+               <a href="/learnModule/contentHome/{{dataContent.id}}">      <img  class="circle responsive-img"
+                         src='{% static dataContent.imageURL|cut:"staticfiles" %}'/></a>
+                {% else %}
+                  <a href="/learnModule/contentHome/{{dataContent.id}}">   <img class="circle responsive-img"
+                         src="../../static/learnModule/images/{{dataContent.style__name}}.png"/></a>
+                {% endif %}
+
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+               <a href="/learnModule/contentHome/{{dataContent.id}}"  class="black-text">  {% if dataContent.title|truncatechars:80 %}
+                  {{ dataContent.title }}</br>
+              {% endif %}
+              {% if dataContent.description %}
+                  {{ dataContent.description|truncatechars:50 }}</br>
+              {% endif %}
+                </a>
+                </div>
+               <div class="hide-on-med-and-up">
+                 <a href="/learnModule/contentHome/{{dataContent.id}}"  class="black-text">
+                     {% if dataContent.title %}
+                {{ dataContent.title|truncatechars:50 }}</br>
+                {% endif %}</a>
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                    <i class="material-icons md-48" id="test4{{dataContent.id}}"
+                    onclick="tooglediv({{dataContent.id}},'test4')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{dataContent.id}}test4">
+               <div class="row">
+                  <div class="col s4">
+                  {% if dataContent.userfavouritecontent__type == 'FC' and dataContent.usercontent__type == None %}
+                    <a href="/learnModule/UnFavourite/{{dataContent.id}}" class="orange-text">DELETE</a>
+                    {% elif dataContent.userfavouritecontent__type == 'FC' and dataContent.usercontent__type == 'LC' %}
+                        <a href="/learnModule/DelLearnedContent/{{dataContent.id}}" class="orange-text">DELETE</a>
+                    {% elif dataContent.userfavouritecontent__type == None and dataContent.usercontent__type == 'LC' %}
+                        <a href="/learnModule/DelLearnedContent/{{dataContent.id}}" class="orange-text">DELETE</a>
+                    {% endif %}
+
+                  </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+                  </div>
+                   <div class="col s4">
+                       <a href="/learnModule/FPIC/" class="right orange-text">MORE</a>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+ </div>
+{% endfor %}
+    {% endif %}
+  </div>
+
+  <div id="test5" class="col s12 m12 l12">
+
+{% if learnedContent %}
+  {% for learnedContent in learnedContent %}
+
+      <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel ">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+             <img src="" alt="" class="circle responsive-img">
+
+                 {% if learnedContent.imageURL != '' %}
+                 <a href="/learnModule/contentHome/{{learnedContent.id}}">
+                     <img class="circle responsive-img" src='{% static learnedContent.imageURL|cut:"staticfiles" %}'/>
+              </a>  {% else %}
+                   <a href="/learnModule/contentHome/{{learnedContent.id}}">  <img class="circle responsive-img" src="../../static/learnModule/images/{{learnedContent.style__name}}.png"/>
+              </a>  {% endif %}
+
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+              <a href="/learnModule/contentHome/{{learnedContent.id}}"  class="black-text">
+                  {% if learnedContent.title|truncatechars:80 %}
+                  {{ learnedContent.title }}</br>
+              {% endif %}
+              {% if learnedContent.description %}
+                  {{ learnedContent.description|truncatechars:50 }}</br>
+              {% endif %}</a>
+
+                </div>
+               <div class="hide-on-med-and-up">
+               <a href="/learnModule/contentHome/{{learnedContent.id}}"  class="black-text">
+                   {% if learnedContent.title %}
+                {{ learnedContent.title|truncatechars:50 }}</br>
+                {% endif %}</a>
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                    <i class="material-icons md-48" id="test5{{learnedContent.id}}"
+                    onclick="tooglediv({{learnedContent.id}},'test5')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{learnedContent.id}}test5">
+              <div class="row">
+                  <div class="col s4">
+                      <a href="/learnModule/DelLearnedContent/{{learnedContent.id}}" class="orange-text">DELETE</a>
+                  </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+                  </div>
+                   <div class="col s4">
+                       <a href="/learnModule/FPIC/" class="right orange-text">MORE</a>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+ </div>
+{% endfor %}
+    {% endif %}
+
+
+   </div>
+{% endcomment %}
+<div id="test6" class="col s12 m12 l12">
+{% if favContent %}
+  {% for favContent in favContent %}
+      <div class="col s12 m8 offset-m2 l6 offset-l3">
+       <div class="card-panel ">
+         <div class="row valign-wrapper">
+           <div class="col s2 m2 l2">
+               {% if favContent.imageURL != '' %}
+                 <a href="/learnModule/contentHome/{{favContent.id}}">
+                     <img class="circle responsive-img" src='{% static favContent.imageURL|cut:"staticfiles" %}'/>
+                  </a>
+                  {% else %}
+                  <a href="/learnModule/contentHome/{{favContent.id}}" >
+                  <img class="circle responsive-img" src="../../static/learnModule/images/{{favContent.style__name}}.png"/>
+                  </a>
+               {% endif %}
+           </div>
+           <div class="col s8 m8 l8 black-text">
+               <div class="hide-on-small-only">
+             <a href="/learnModule/contentHome/{{favContent.id}}" class="black-text">
+                {% if favContent.title|truncatechars:80 %}
+                    {{ favContent.title }}</br>
+                {% endif %}
+                {% if favContent.description %}
+                    {{ favContent.description|truncatechars:50 }}</br>
+                {% endif %}
+                </a>
+                </div>
+               <div class="hide-on-med-and-up">
+                  <a href="/learnModule/contentHome/{{favContent.id}}"  class="black-text">
+                {% if favContent.title %}
+                    {{ favContent.title|truncatechars:50 }}</br>
+                {% endif %}
+               </a>
+               </div>
+             </div>
+           <div class="col s2 m2 l2">
+              <span class="right">
+                    <i class="material-icons md-48" id="test6{{favContent.id}}"
+                    onclick="tooglediv({{favContent.id}},'test6')">keyboard_arrow_down</i>
+              </span>
+           </div>
+         </div>
+           <div class="mydiv" id="{{favContent.id}}test6">
+                <div class="row">
+                  <div class="col s4">
+                   <a href="/learnModule/UnFavourite/{{favContent.id}}" class="orange-text">DELETE</a>
+                  </div>
+                  <div class="col s4">
+                    <div class="orange-text">SHARE</div>
+                  </div>
+                   <div class="col s4">
+                       <a href="/learnModule/FPIC/" class="right  orange-text">MORE</a>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+ </div>
+{% endfor %}
+{% endif %}
+
+  </div>
+
+ </div>
+{% else %}
+    <div class="section no-pad-bot" id="index-banner2">
+      <div class="container">
+            <div class="row center displayinfo">
+                <div class="white-text">
+                    <h5>No Resources saved yet</h5></div>
+                <div class="white-text darken-4">
+                     <h5>Find some materials you like and click on the heart save them here.</h5>
+                </div>
+                 <div class="white-text col s12 l5 push-l4">
+         			<a href="/library/" class="btn waves-effect waves-light red loginbtn">Explore Resources</a>
+		       </div>
+       </div>
+
+      </div>
+
+	</div>
+{% endif %}
+ <script src="{% static 'users/js/newjs.js' %}"></script>
+{% endblock %}
+
+

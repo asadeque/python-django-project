@@ -1,0 +1,655 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>IRRG</title>
+        {% load static %}
+
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link href="{% static 'learnModule/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'learnModule/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'learnModule/css/newcustom.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'learnModule/css/custom.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-24 { font-size: 24px; }
+    .material-icons.md-36 { font-size: 36px; }
+    .material-icons.md-48 { font-size: 48px; }
+
+    /* Rules for using icons as black on a light background. */
+    .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+    .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+    /* Rules for using icons as white on a dark background. */
+    .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+    .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+    .material-icons.orange600 { color: #FB8C00; }
+    .material-icons.gr { color: #2E7D32; }
+    .material-icons.rd { color: #D50000; }
+
+
+    .f9 { font-size: 90%; }
+	.f8 { font-size: 80%; }
+	.f7 { font-size: 70%; }
+</style>
+    </head>
+	<body id="top">
+                <nav id="nav">
+                           <div class="nav-wrapper red darken-1">
+                             <a href="#!" class="brand-logo white-text darken-1 left" id="title"></a>
+                             <a href="#" data-activates="mobile-demo" class="button-collapse right">
+                             <i class="material-icons menulinks">menu</i></a>
+
+                             <ul id="mobile-demo" class="side-nav red darken-1">
+                             		   <li><a href="/" id="home" class="white-text darken-1"></a></li>
+                               <li><a href="/learnModule/FPIC/" class="white-text darken-1" id="fpic"></a></li>
+                               <li><a href="/learnModule/Consultation/" class="white-text darken-1" id="consult"></a></li>
+                               <li><a href="/story/" class="white-text darken-1" id="stories"></a></li>
+                               <li><a href="/blog/list/" class="white-text darken-1" id="blog"></a></li>
+                               <li><a href="/library/" class="white-text darken-1" id="search"></a></li>
+
+                               <li class="no-padding">
+                                 <ul class="collapsible collapsible-accordion">
+                                   <li>
+                                     <a class="collapsible-header"><span class="white-text darken-1" id="langword"></span>
+									 <i class="material-icons white-text darken-1 right">arrow_drop_down</i></a>
+                                     <div class="collapsible-body red darken-1">
+                                       <ul>
+                                              {% if langContent %}
+                                                     {% for lang in langContent %}
+                                                         <li><a href="{% url 'language' lang.id %}" class="white-text darken-1">{{ lang.name }}</a></li>
+                                                     {% endfor %}
+                                                  {% endif %}
+                                       </ul>
+                                     </div>
+                                   </li>
+                                 </ul>
+                               </li>
+
+
+                               <li>
+                                      {% if "user_id" in request.session %}
+
+								<li class="no-padding">
+                                 <ul class="collapsible collapsible-accordion">
+                                   <li>
+                                     <a class="collapsible-header">
+										 <span class="white-text darken-1" id="account"></span>
+										 <i class="material-icons  white-text darken-1 right">arrow_drop_down</i></a>
+                                     <div class="collapsible-body  red darken-1">
+                                       <ul>
+                                        <li><a href="users/Profile/" class="white-text darken-1" id="profile"></a></li>
+										    <li><a href="/users/Logout" class="white-text darken-1" id="logout"></a></li>
+
+                                       </ul>
+                                     </div>
+                                   </li>
+                                 </ul>
+                               </li>
+                                      {% else %}
+                                          <a href="/users/" class="white-text darken-1" id="login"></a>
+                                      {% endif %}
+                               </li>
+                               </ul>
+
+
+                                <ul class="right hide-on-med-and-down">
+                                   <li><a class="menulinks" href="/" id="home1">Home</a></li>
+                                   <li><a class="menulinks" href="/learnModule/FPIC/" id="fpic1">FPIC</a></li>
+                                   <li><a class="menulinks" href="/learnModule/Consultation/" id="consult1">Consultation</a></li>
+                                   <li><a class="menulinks" href="/story/" id="stories1">Stories</a></li>
+                                   <li><a class="menulinks" href="/blog/list/" id="blog1">Blog</a></li>
+                                   <li><a class="menulinks" href="/library/" id="search1">Search</a></li>
+                                   <li><a class="dropdown-button menulinks" href="#!" data-activates="dropdown1" ><span id="langword1">Language</span>
+									   <i class="material-icons right">arrow_drop_down</i></a></li>
+                                   <li>
+                                      {% if "user_id" in request.session %}
+                                        <a class="dropdown-button menulinks" href="#!" data-activates="dropdown2">
+											<span id="account1">Account</span>
+									   <i class="material-icons right">arrow_drop_down</i></a>
+                                      {% else %}
+                                          <a href="/users/" class="menulinks" id="login1">Login</a>
+                                      {% endif %}
+                                   </li>
+                                </ul>
+                                  <ul id="dropdown1" class="dropdown-content menulinks">
+                                      {% if langContent %}
+                                        {% for lang in langContent %}
+                                           <li><a href="{% url 'language' lang.id %}">{{ lang.name }}</a></li>
+                                        {% endfor %}
+                                      {% endif %}
+                                  </ul>
+								  <ul id="dropdown2" class="dropdown-content menulinks">
+                                			<li><a href="users/Profile/" id="profile1">Profile</a></li>
+										    <li><a href="/users/Logout" id="logout1">Logout</a></li>
+
+                                  </ul>
+                           </div>
+
+                 </nav>
+
+					{% block content %}
+					{% endblock %}
+
+
+<!-- Footer -->
+<div id="footerMenu">
+  <footer class="page-footer grey darken-3">
+    <div class="container">
+      <div class="row">
+        <div class="col s6 m4 l4">
+          <h5 class="white-text" id="info"></h5>
+          <ul>
+            <li><a class="white-text" href="#!" id="about"></a></li>
+            <li><a class="white-text" href="#!" id="research"></a></li>
+          </ul>
+             <h5 class="white-text" id="help"></h5>
+              <ul>
+                <li><a class="white-text" href="#!" id="contact"></a></li>
+                <li><a class="white-text" href="#!" id="faq"></a></li>
+                <!--<li><a class="white-text" href="#!">Language : </a></li>-->
+              </ul>
+        </div>
+        <div class="col s6 m4 l4">
+          <h5 class="white-text" id="partners"></h5>
+          <ul>
+            <li><a class="white-text" href="https://www.wlu.ca/" target="_blank" id="wlu"></a></li>
+            <li><a class="white-text" href="http://www.snpolytechnic.com/" target="_blank" id="snp"></a></li>
+            <li><a class="white-text" href="https://www.lakeheadu.ca/" target="_blank" id="lhu"></a></li>
+            <li><a class="white-text" href="http://www2.ulaval.ca/" target="_blank" id="lu"></a></li>
+              <li><a class="white-text" href="https://www.uach.cl/" target="_blank" id="ua"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      	  <span id="copyr1"></span><a class="brown-text text-lighten-3" href="http://materializecss.com"
+			id="copyr2"></a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+	</body>
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="{% static 'learnModule/js/materialize.js' %}"></script>
+      <script src="{% static 'learnModule/js/init.js' %}"></script>
+      <script src="{% static 'learnModule/js/custom.js' %}"></script>
+	  <script type="text/javascript">
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this);
+                    }
+                };
+
+				var lang = {{ request.session.language }};
+				var path = '{% static 'learnModule/' %}';
+                if(lang == 1)
+				{
+					lang = 'spanish';
+				}
+				else if (lang  == 2)
+				{
+					lang = 'english';
+				}
+				else
+				{
+					lang = 'english';
+				}
+				//xhttp.open("GET", "http://localhost:8000/static/learnModule/english.xml", true);
+
+                xhttp.open("GET", path+lang+".xml", true);
+                xhttp.send();
+
+                function myFunction(xml)
+                 {
+                    var xmlDoc = xml.responseXML;
+                    var headerMenu = xmlDoc.getElementsByTagName("headerMenu");
+					document.getElementById("title").innerHTML = headerMenu[0].getElementsByTagName('title')[0].firstChild.nodeValue
+					document.getElementById("home").innerHTML = headerMenu[0].getElementsByTagName('home')[0].firstChild.nodeValue
+					document.getElementById("fpic").innerHTML = headerMenu[0].getElementsByTagName('fpic')[0].firstChild.nodeValue
+					document.getElementById("consult").innerHTML = headerMenu[0].getElementsByTagName('consult')[0].firstChild.nodeValue
+					document.getElementById("stories").innerHTML = headerMenu[0].getElementsByTagName('stories')[0].firstChild.nodeValue
+					document.getElementById("blog").innerHTML = headerMenu[0].getElementsByTagName('blog')[0].firstChild.nodeValue
+					document.getElementById("search").innerHTML = headerMenu[0].getElementsByTagName('search')[0].firstChild.nodeValue
+					document.getElementById("langword").innerHTML = headerMenu[0].getElementsByTagName('langword')[0].firstChild.nodeValue
+					document.getElementById("logout").innerHTML = headerMenu[0].getElementsByTagName('logout')[0].firstChild.nodeValue
+					//document.getElementById("login").innerHTML = headerMenu[0].getElementsByTagName('login')[0].firstChild.nodeValue
+					document.getElementById("home1").innerHTML = headerMenu[0].getElementsByTagName('home')[0].firstChild.nodeValue
+					document.getElementById("fpic1").innerHTML = headerMenu[0].getElementsByTagName('fpic')[0].firstChild.nodeValue
+					document.getElementById("consult1").innerHTML = headerMenu[0].getElementsByTagName('consult')[0].firstChild.nodeValue
+					document.getElementById("stories1").innerHTML = headerMenu[0].getElementsByTagName('stories')[0].firstChild.nodeValue
+					document.getElementById("blog1").innerHTML = headerMenu[0].getElementsByTagName('blog')[0].firstChild.nodeValue
+					document.getElementById("search1").innerHTML = headerMenu[0].getElementsByTagName('search')[0].firstChild.nodeValue
+					document.getElementById("langword1").innerHTML = headerMenu[0].getElementsByTagName('langword')[0].firstChild.nodeValue
+					document.getElementById("logout1").innerHTML = headerMenu[0].getElementsByTagName('logout')[0].firstChild.nodeValue
+
+					if(document.getElementById("account"))
+					{
+					  document.getElementById("account").innerHTML = headerMenu[0].getElementsByTagName('account')[0].firstChild.nodeValue
+					  document.getElementById("account1").innerHTML = headerMenu[0].getElementsByTagName('account')[0].firstChild.nodeValue
+					  document.getElementById("profile").innerHTML = headerMenu[0].getElementsByTagName('profile')[0].firstChild.nodeValue
+					}
+
+					if(document.getElementById("indexpage"))
+					{
+						var index = xmlDoc.getElementsByTagName("index");
+						document.getElementById("hptitle").innerHTML =
+							 index[0].getElementsByTagName('hptitle')[0].firstChild.nodeValue
+						document.getElementById("hpdesc1").innerHTML =
+							index[0].getElementsByTagName('hpdesc1')[0].firstChild.nodeValue
+						document.getElementById("hpdesc2").innerHTML =
+							index[0].getElementsByTagName('hpdesc2')[0].firstChild.nodeValue
+						document.getElementById("lm").innerHTML =
+							index[0].getElementsByTagName('lm')[0].firstChild.nodeValue
+						document.getElementById("panelpara1bold").innerHTML =
+							index[0].getElementsByTagName('panelpara1bold')[0].firstChild.nodeValue
+						document.getElementById("panelpara1").innerHTML =
+							index[0].getElementsByTagName('panelpara1')[0].firstChild.nodeValue
+						document.getElementById("panelpara2").innerHTML =
+							index[0].getElementsByTagName('panelpara2')[0].firstChild.nodeValue
+						document.getElementById("panelpara2bold").innerHTML =
+							index[0].getElementsByTagName('panelpara2bold')[0].firstChild.nodeValue
+						document.getElementById("panelpara22").innerHTML =
+							index[0].getElementsByTagName('panelpara22')[0].firstChild.nodeValue
+						document.getElementById("panelpara3bold1").innerHTML =
+							index[0].getElementsByTagName('panelpara3bold1')[0].firstChild.nodeValue
+						document.getElementById("panelpara3").innerHTML =
+							index[0].getElementsByTagName('panelpara3')[0].firstChild.nodeValue
+						document.getElementById("panelpara3bold2").innerHTML =
+							index[0].getElementsByTagName('panelpara3bold2')[0].firstChild.nodeValue
+						document.getElementById("card11").innerHTML =
+							index[0].getElementsByTagName('card11')[0].firstChild.nodeValue
+						document.getElementById("card1link").innerHTML =
+							index[0].getElementsByTagName('card1link')[0].firstChild.nodeValue
+						document.getElementById("card12").innerHTML =
+							index[0].getElementsByTagName('card12')[0].firstChild.nodeValue
+						document.getElementById("card21").innerHTML =
+							index[0].getElementsByTagName('card21')[0].firstChild.nodeValue
+						document.getElementById("card2bold").innerHTML =
+							index[0].getElementsByTagName('card2bold')[0].firstChild.nodeValue
+
+					}
+					if(document.getElementById("footerMenu"))
+					{
+						var footerMenu = xmlDoc.getElementsByTagName("footerMenu");
+						document.getElementById("info").innerHTML = footerMenu[0].getElementsByTagName('info')[0].firstChild.nodeValue
+						document.getElementById("about").innerHTML = footerMenu[0].getElementsByTagName('about')[0].firstChild.nodeValue
+						document.getElementById("research").innerHTML = footerMenu[0].getElementsByTagName('research')[0].firstChild.nodeValue
+						document.getElementById("help").innerHTML = footerMenu[0].getElementsByTagName('help')[0].firstChild.nodeValue
+						document.getElementById("contact").innerHTML = footerMenu[0].getElementsByTagName('contact')[0].firstChild.nodeValue
+						document.getElementById("faq").innerHTML = footerMenu[0].getElementsByTagName('faq')[0].firstChild.nodeValue
+						document.getElementById("partners").innerHTML = footerMenu[0].getElementsByTagName('partners')[0].firstChild.nodeValue
+						document.getElementById("wlu").innerHTML = footerMenu[0].getElementsByTagName('wlu')[0].firstChild.nodeValue
+						document.getElementById("snp").innerHTML = footerMenu[0].getElementsByTagName('snp')[0].firstChild.nodeValue
+						document.getElementById("lhu").innerHTML = footerMenu[0].getElementsByTagName('lhu')[0].firstChild.nodeValue
+						document.getElementById("lu").innerHTML = footerMenu[0].getElementsByTagName('lu')[0].firstChild.nodeValue
+						document.getElementById("ua").innerHTML = footerMenu[0].getElementsByTagName('ua')[0].firstChild.nodeValue
+						document.getElementById("copyr1").innerHTML = footerMenu[0].getElementsByTagName('copyr1')[0].firstChild.nodeValue
+						document.getElementById("copyr2").innerHTML = footerMenu[0].getElementsByTagName('copyr2')[0].firstChild.nodeValue
+					}
+					if(document.getElementById("fpicPage"))
+					{
+						var fpicPage = xmlDoc.getElementsByTagName("fpicPage");
+						document.getElementById("fpicTitle").innerHTML = fpicPage[0].getElementsByTagName('fpicTitle')[0].firstChild.nodeValue
+						document.getElementById("para1").innerHTML = fpicPage[0].getElementsByTagName('para1')[0].firstChild.nodeValue
+						document.getElementById("boldpara1").innerHTML = fpicPage[0].getElementsByTagName('boldpara1')[0].firstChild.nodeValue
+						document.getElementById("miniCourse").innerHTML = fpicPage[0].getElementsByTagName('miniCourse')[0].firstChild.nodeValue
+						document.getElementById("fpicpanelpara1").innerHTML = fpicPage[0].getElementsByTagName('fpicpanelpara1')[0].firstChild.nodeValue
+						document.getElementById("fpicpanelpara2").innerHTML = fpicPage[0].getElementsByTagName('fpicpanelpara2')[0].firstChild.nodeValue
+						document.getElementById("fpicpanelpara3").innerHTML = fpicPage[0].getElementsByTagName('fpicpanelpara3')[0].firstChild.nodeValue
+						document.getElementById("highresourcetitle").innerHTML = fpicPage[0].getElementsByTagName('highresourcetitle')[0].firstChild.nodeValue
+						document.getElementById("more").innerHTML = fpicPage[0].getElementsByTagName('more')[0].firstChild.nodeValue
+						document.getElementById("fpicinfo").innerHTML = fpicPage[0].getElementsByTagName('fpicinfo')[0].firstChild.nodeValue
+						document.getElementById("fpicall").innerHTML = fpicPage[0].getElementsByTagName('fpicall')[0].firstChild.nodeValue
+						document.getElementById("fpictoolkit").innerHTML = fpicPage[0].getElementsByTagName('fpictoolkit')[0].firstChild.nodeValue
+					}
+
+					if(document.getElementById("consultPage"))
+					{
+						var consultPage = xmlDoc.getElementsByTagName("consultPage");
+						document.getElementById("consultTitle").innerHTML = consultPage[0].getElementsByTagName('consultTitle')[0].firstChild.nodeValue
+						document.getElementById("para1").innerHTML = consultPage[0].getElementsByTagName('para1')[0].firstChild.nodeValue
+						document.getElementById("boldpara1").innerHTML = consultPage[0].getElementsByTagName('boldpara1')[0].firstChild.nodeValue
+						document.getElementById("miniCourse").innerHTML = consultPage[0].getElementsByTagName('miniCourse')[0].firstChild.nodeValue
+						document.getElementById("consultpanelpara1").innerHTML = consultPage[0].getElementsByTagName('consultpanelpara1')[0].firstChild.nodeValue
+						document.getElementById("consultpanelpara2").innerHTML = consultPage[0].getElementsByTagName('consultpanelpara2')[0].firstChild.nodeValue
+						document.getElementById("consultpanelpara3").innerHTML = consultPage[0].getElementsByTagName('consultpanelpara3')[0].firstChild.nodeValue
+						document.getElementById("highresourcetitle").innerHTML = consultPage[0].getElementsByTagName('highresourcetitle')[0].firstChild.nodeValue
+						document.getElementById("more").innerHTML = consultPage[0].getElementsByTagName('more')[0].firstChild.nodeValue
+						document.getElementById("consultinfo").innerHTML = consultPage[0].getElementsByTagName('consultinfo')[0].firstChild.nodeValue
+						document.getElementById("consultall").innerHTML = consultPage[0].getElementsByTagName('consultall')[0].firstChild.nodeValue
+						document.getElementById("consulttoolkit").innerHTML = consultPage[0].getElementsByTagName('consulttoolkit')[0].firstChild.nodeValue
+					}
+					if(document.getElementById("storypage"))
+					{
+
+						var storyPage = xmlDoc.getElementsByTagName("storyPage");
+						document.getElementById("consultTitle").innerHTML = storyPage[0].getElementsByTagName('consultTitle')[0].firstChild.nodeValue
+						document.getElementById("para1").innerHTML = storyPage[0].getElementsByTagName('para1')[0].firstChild.nodeValue
+						document.getElementById("storyall").innerHTML = storyPage[0].getElementsByTagName('storyall')[0].firstChild.nodeValue
+						document.getElementById("storygood").innerHTML = storyPage[0].getElementsByTagName('storygood')[0].firstChild.nodeValue
+						document.getElementById("storybad").innerHTML = storyPage[0].getElementsByTagName('storybad')[0].firstChild.nodeValue
+						document.getElementById("storyugly").innerHTML = storyPage[0].getElementsByTagName('storyugly')[0].firstChild.nodeValue
+						document.getElementById("more").innerHTML = storyPage[0].getElementsByTagName('more')[0].firstChild.nodeValue
+				  }
+
+
+                 }
+
+         function fpicFavContent(id, task, type)
+			{
+				 {% if "user_id" in request.session %}
+				 	user_id = {{request.session.user_id}};
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+						{xmlhttp = new XMLHttpRequest();}
+					else
+						{xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");}
+
+					if(task == 'FVT')
+						{ var path = 'http://localhost:8000/library/Favourite/'+id; }
+					else
+						{ var path = 'http://localhost:8000/library/DelFavourite/'+id; }
+					xmlhttp.open("GET", path, true);
+
+					xmlhttp.onreadystatechange = function()
+					{
+						if (this.readyState == 4 && this.status == 200)
+							{
+								if(this.responseText == 'Favourite')
+								{
+									document.getElementById(type+id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=fpicFavContent("+id+",'UNFVT','"+type+"')>favorite</i>";
+								}
+							 	if(this.responseText == 'DelFavourite')
+								{
+									document.getElementById(type+id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=fpicFavContent("+id+",'FVT','"+type+"')>favorite_border</i>";
+								}
+							}
+						};
+
+						xmlhttp.send();
+
+				{%else%}
+					 window.location.href = 'http://localhost:8000/users/';
+				{%endif%}
+			}
+
+     function FavContent(id, task)
+			{
+				{% if "user_id" in request.session %}
+				 	user_id = {{request.session.user_id}};
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+						{xmlhttp = new XMLHttpRequest();}
+					else
+						{xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");}
+
+					if(task == 'FVT')
+						{ var path = 'http://localhost:8000/learnModule/Favourite/'+id; }
+					else
+						{ var path = 'http://localhost:8000/learnModule/DelFavourite/'+id; }
+					xmlhttp.open("GET", path, true);
+
+					xmlhttp.onreadystatechange = function()
+					{
+						if (this.readyState == 4 && this.status == 200)
+							{
+								if(this.responseText == 'Favourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavContent("+id+",'UNFVT')>favorite</i>";
+								}
+							 	if(this.responseText == 'DelFavourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavContent("+id+",'FVT')>favorite_border</i>";
+								}
+							}
+					};
+
+					xmlhttp.send();
+
+				{%else%}
+					 window.location.href = 'http://localhost:8000/users/';
+				{%endif%}
+		}
+             function FavIndvContent(id, task)
+			{
+				{% if "user_id" in request.session %}
+				 	user_id = {{request.session.user_id}};
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+						{xmlhttp = new XMLHttpRequest();}
+					else
+						{xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");}
+
+					if(task == 'FVT')
+						{ var path = 'http://localhost:8000/learnModule/Favourite/'+id; }
+					else
+						{ var path = 'http://localhost:8000/learnModule/DelFavourite/'+id; }
+					xmlhttp.open("GET", path, true);
+
+					xmlhttp.onreadystatechange = function()
+					{
+						if (this.readyState == 4 && this.status == 200)
+							{
+								if(this.responseText == 'Favourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavIndvContent("+id+",'UNFVT')>bookmark</i>";
+								}
+							 	if(this.responseText == 'DelFavourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavIndvContent("+id+",'FVT')>bookmark_border</i>";
+								}
+							}
+					};
+
+					xmlhttp.send();
+
+				{%else%}
+					 window.location.href = 'http://localhost:8000/users/';
+				{%endif%}
+          }
+		   function LearnedContent(id, task)
+			{
+				{% if "user_id" in request.session %}
+				 	user_id = {{request.session.user_id}}
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+						{xmlhttp = new XMLHttpRequest();}
+					else
+						{xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");}
+
+					if(task == 'FVT')
+						{ var path = 'http://localhost:8000/learnModule/Learned/'+id; }
+					else
+						{ var path = 'http://localhost:8000/learnModule/DelLearnedContent/'+id; }
+					xmlhttp.open("GET", path, true);
+
+					xmlhttp.onreadystatechange = function()
+					{
+						if (this.readyState == 4 && this.status == 200)
+							{
+								if(this.responseText == 'Favourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=LearnedContent("+id+",'UNFVT')>favourite</i>";
+								}
+							 	if(this.responseText == 'DelFavourite')
+								{
+									document.getElementById(id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=LearnedContent("+id+",'FVT')>favourite_border</i>";
+								}
+							}
+					};
+
+					xmlhttp.send();
+
+				{%else%}
+					 window.location.href = 'http://localhost:8000/users/';
+				{%endif%}
+        }
+		   function FavCourse(id, task, type)
+			{
+				{% if "user_id" in request.session %}
+				 	user_id = {{request.session.user_id}};
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+						{xmlhttp = new XMLHttpRequest();}
+					else
+						{xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");}
+
+					if(task == 'FVT')
+						{ var path = 'http://localhost:8000/learnModule/FavouriteCourse/'+id; }
+					else
+						{ var path = 'http://localhost:8000/learnModule/DelFavouriteCourse/'+id; }
+					xmlhttp.open("GET", path, true);
+
+					xmlhttp.onreadystatechange = function()
+					{
+						if (this.readyState == 4 && this.status == 200)
+							{
+								if(this.responseText == 'Favourite')
+								{
+									document.getElementById(type+id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavCourse("+id+",'UNFVT','"+type+"')>favorite</i>";
+								}
+							 	if(this.responseText == 'DelFavourite')
+								{
+									document.getElementById(type+id).innerHTML =
+								"<i class='material-icons md-36 orange600 left' onclick=FavCourse("+id+",'FVT','"+type+"')>favorite_border</i>";
+								}
+							}
+					};
+
+					xmlhttp.send();
+
+
+				{%else%}
+					 window.location.href = 'http://localhost:8000/users/';
+				{%endif%}
+		}
+
+			function mychecklist()
+			 {
+				var form = document.getElementById('quiz4');
+
+				var mychecklist = form.elements['checklist[]'];
+				var Querystring = "?";
+				for (var i = 0; i < mychecklist.length; i++) {
+					if(i!=0)
+					{
+						Querystring += "&";
+					}
+					Querystring += mychecklist[i].value + "=" + (mychecklist[i].checked?'checked':'unchecked');
+				}
+				var xmlhttp;
+				if (window.XMLHttpRequest) {
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for older browsers
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("feedbackdiv").innerHTML = this.responseText;
+					}
+				};
+				var path = 'http://localhost:8000/learnModule/checklist'+Querystring;
+				xmlhttp.open("GET", path, true);
+				xmlhttp.send();
+		}
+			function boolTest()
+			 {
+				var quizno = document.getElementById('quizNo').value;
+				var form = document.getElementById('quiz3');
+				var querystring = "/"+quizno+"/?";
+				var myquestionids = form.elements['quesionid[]'];
+				for (var i = 0; i < myquestionids.length; i++) {
+					if(i!=0)
+					{
+						querystring += "&";
+					}
+					var myquestionid = myquestionids[i];
+					questionid = myquestionid.value;
+					ans = document.querySelector('input[name = "'+questionid+'"]:checked').value;
+					if (ans == '')
+						{ans = 0;}
+					else
+						{ans = ans;}
+					querystring += questionid+"="+ans ;
+				}
+				var xmlhttp;
+				if (window.XMLHttpRequest) {
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for older browsers
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("bResultDiv").innerHTML = this.responseText;
+					}
+				};
+				var path = 'http://localhost:8000/learnModule/boolQuiz'+querystring;
+				xmlhttp.open("GET", path, true);
+				xmlhttp.send();
+		}
+
+			function mytest()
+			 {
+				var quizno = document.getElementById('quizNo').value;
+				var form = document.getElementById('quiz2');
+				var querystring = "/"+quizno+"/?";
+				var myquestionids = form.elements['quesionid[]'];
+				for (var i = 0; i < myquestionids.length; i++) {
+					if(i!=0)
+					{
+						querystring += "&";
+					}
+					var myquestionid = myquestionids[i];
+					questionid = myquestionid.value;
+					ans = document.querySelector('input[name = "'+questionid+'"]:checked').value;
+					if (ans == '')
+						{ans = 0;}
+					else
+						{ans = ans;}
+					querystring += questionid+"="+ans ;
+				}
+				var xmlhttp;
+				if (window.XMLHttpRequest) {
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for older browsers
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("resultdiv").innerHTML = this.responseText;
+					}
+				};
+				var path = 'http://localhost:8000/learnModule/quiz'+querystring;
+				xmlhttp.open("GET", path, true);
+				xmlhttp.send();
+			 }
+
+
+        </script>
+<script src="{% static 'users/js/newjs.js' %}"></script>
+
+</html>
+
+

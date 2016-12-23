@@ -1,0 +1,202 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+{% static "" as baseUrl %}
+
+
+<div class="container">
+<!-- Content Details Data -->
+{% if contentData %}
+     <div class="row">
+        <div class="col s12 m12">
+          <div class="card">
+               <div class="card-title">
+                   {{ contentData.title }}
+               </div>
+               <diz class="row">
+                    <div class="col s3 m3">
+                        {{ contentData.author }}
+                    </div>
+                    <div class="chip col s5 m5 right">
+                        {{ contentData.topic }}<i class="material-icons">close</i>
+                    </div>
+               </diz>
+              <div class="card-image">
+              {% if contentData.imageURL != '' %}
+                <a href="#"><img src="{% static contentData.imageURL|cut:"staticfiles"  %}" alt=""/></a><!--{{ baseUrl }}learnModule/images/{{contentData.imageURL}}-->
+              {% elif contentData.video_file != '' %}
+                <video width="560" height="315" controls autoplay><source src="{% static contentData.video_file|cut:"staticfiles"  %}" type="video/mp4"></video>
+              {% else %}
+                 <a href="#"><img src="{{ baseUrl }}learnModule/images/{{contentData.LibraryType}}.png" alt=""/></a>
+              {% endif %}
+              </div>
+
+                <div class="card-content">
+                  {{ contentData.description }}
+                </div>
+                  <ul class="collapsible" data-collapsible="accordion">
+                      <li>
+                        <div class="collapsible-header">
+                            <div class="row">
+                                <div class="left">
+                                    More Information
+                                </div>
+                                <i class="material-icons md-36 right">keyboard_arrow_down</i>
+                            </div>
+                        </div>
+                        <div class="collapsible-body">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left">Content Type: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.LibraryType }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Country: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.country }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">File Format: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.format }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">File Size: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.sizeInPages }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Length: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.lengthInMB }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Language: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.language }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Complexity: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.complexity }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Written By: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.writtenBy }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Written For: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.writtenFor }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Keywords: </td>
+                                        <td style="text-align:right">
+                                            <div class="chip">{{ contentData.keywords }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">Copyright: </td>
+                                        <td style="text-align:right">
+                                            <div>{{ contentData.copyRight }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                      </li>
+                    </ul>
+                <div class="card-action">
+                    {% if contentData.file_content != '' and contentData.format_id == 2 %}
+                        <a href="{{contentData.file_content|cut:'staticfiles'}}/{{contentData.id}}"
+                        target="_blank">
+                        <i class="material-icons md-36 right">file_download</i>
+                        </a>
+                    {% elif contentData.file_content != '' and contentData.format_id == 10  %}
+                        <a href="{{ contentData.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                    {% endif %}
+
+                    <div  style="display:inline" id="all{{contentData.id}}">
+                        <i  class="material-icons md-36 orange600 left"
+                            onclick="fpicFavContent({{contentData.id}},
+                            {% if contentData.id in CFR %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                            {% if contentData.id in CFR %}favorite{% else %}favorite_border{% endif %}</i>
+                    </div>
+
+                    <div class="fixed-action-btn horizontal col push-s4 push-m4" style="display:inline">
+                        <a class="btn-floating md-36 red">
+                        <i class="material-icons">share</i>
+                        </a>
+                        <ul>
+                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                            <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                            <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ contentData.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                        </ul>
+                    </div>
+                </div>
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+
+
+    <div class="col s12 m12">
+    <!-- Library Data -->
+        <div class="row">
+            {% if LibraryData %}
+                <div class="card">
+                    <div class="card-title center">Related Resources</div>
+                </div>
+                {% for content in LibraryData %}
+                 <div class="card">
+                    <div class="card-image">
+                        {% if content.imageURL != '' %}
+                            <a href="/library/libraryDetails/{{ content.pk }}"><img src="{{ baseUrl }}learnModule/images/{{content.imageURL}}" alt=""/></a>
+                        {% else %}
+                            <a href="/library/libraryDetails/{{ content.pk }}"><img src="{{ baseUrl }}learnModule/images/{{content.LibraryType}}.png" alt=""/></a>
+                        {% endif %}
+                    </div>
+                    <div class="card-title">
+                        {{ content.title }}
+                    </div>
+                    <div class="card-content">
+                        {{ content.author }}, {{ content.createdDate.date }}
+                    </div>
+                    <div class="card-content">
+                        {{ content.topic }}
+                    </div>
+                    <div class="card-action">
+                        <a class="right" href="/library/libraryDetails/{{ content.pk }}">Read More</a>
+                        <div  style="display:inline" id="res{{content.id}}">
+                            <i  class="material-icons md-36 orange600 left"
+                                onclick="fpicFavContent({{content.id}},
+                                {% if content.id in CFRALL %}'UNFVT'{% else %}'FVT'{% endif %},'res')">
+                                {% if content.id in CFRALL %}favorite{% else %}favorite_border{% endif %}</i>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No related resources are available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% comment %}
+
+{% endcomment %}
+

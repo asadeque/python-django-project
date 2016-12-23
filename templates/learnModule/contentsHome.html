@@ -1,0 +1,565 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %}
+{% load pagination_tags %}
+<style>
+    .hidediv
+    {
+      display:none;
+    }
+</style>
+<!-- SHOW RESOURCES   -->
+<div class="container">
+    <div class="row">
+<!-- Content Details Data -->
+        {% for ContentList in ContentList %}
+        Content {{ ContentList.id }}
+        <nav class="nav-extended">
+            <div class="nav-wrapper">
+                <ul class="tabs tabs-transparent">
+                    {% for i = 1; i<= contentsCount; i = i + 1; %}
+                        <li class="tab"><a href="#test{{ ContentList.id }}">Content {{ ContentList.id }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+        {% endfor %}
+    </div>
+</div>
+{% endcomment %}
+<!-- SHOW RESOURCES   -->
+<div class="container resourcedata">
+    <div class="row">
+<!-- Content Details Data -->
+        <div>
+            {% if ContentList %}
+            {% for ContentList in ContentList %}
+            {% if ContentList.style_id == 1 or ContentList.style_id == 2 %}
+                <div class="card" id="ContentDetailPage">
+                    {% static "" as baseUrl %}
+                     <div class="card-title center">
+                          <h4>{{ ContentList.title }}</h4>
+                     </div>
+                      <div class="card-image">
+                        {% if ContentList.imageURL != '' %}
+                            <a href="#">
+                                <img src='{{ baseUrl }}learnModule/images/{{ContentList.imageURL}}' alt=""/>
+                            </a>
+                        {% else %}
+                            <a href="#">
+                                <img src='{{ baseUrl }}learnModule/images/{{ContentList.style}}.png' alt=""/>
+                            </a>
+                        {% endif %}
+                          </div>
+
+                        <div class="card-content">
+                        {{ ContentList.description }}
+                        </div>
+                       <div class="card-action">
+                        {% if ContentList.file_content != '' and ContentList.format_id == 2 %}
+                            <a href="{{baseUrl}}learnModule/images/{{ ContentList.file_content }}" download="" target="_blank">
+                            <button id="download"></button></a>
+                        {% elif ContentList.file_content != '' and ContentList.format_id == 10  %}
+                            <a href="{{ ContentList.file_content }}" target="_blank">
+                            <button id="ClickMe"></button></a>
+                        {% endif %}
+                        <form name="done" method='POST'>
+                            {% csrf_token %}
+                            {% comment %}
+                            {% if ContentList.id in CLC %}
+                                <a href="/learnModule/Learned/{{ContentList.id}}" class="button special">
+                                    <i class="material-icons md-48">check_circle</i>
+                                </a>
+                            {% endif %}
+                            {% endcomment %}
+                                  <div id="LC{{ContentList.id}}">
+                                        <i  class="material-icons md-36 orange600 right"
+                                            onclick="LearnedContent({{ContentList.id}},
+                                            {% if ContentList.id in CLC %}'UNFVT'{% else %}'FVT'{% endif %},'LC')">
+                                            {% if ContentList.id in CLC %}favorite{% else %}favorite_border{% endif %}</i>
+                                    </div>
+                                    <div  id="{{ContentList.id}}">
+                                        <i  class="material-icons md-36 orange600 left"
+                                            onclick="FavIndvContent({{ContentList.id}},
+                                            {% if ContentList.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %})">
+                                            {% if ContentList.id in CFC %}bookmark{% else %}bookmark_border{% endif %}</i>
+
+                            </div>
+                        </form>
+                       </div>
+                   </div>
+                </div>
+            {% elif ContentList.style_id == 3 %} <!-- MulBoolean Type Quiz Data -->
+                    <div class="card">
+                        <div class="card-title">
+                            <header style="text-align:center">
+                                <h3>Test Your Knowledge</h3>
+                            </header>
+                        </div>
+                        <div class="card-content">
+                            This is a text that explains what this is about, what this question is about, etc.
+                        </div>
+                        <div class="card-content">
+                            <span class="orange-text" id="flip">START</span>
+                        </div>
+                    </div>
+                            <div id="panel"><div class="row ">
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;Checklist:</div>
+                                    </div>
+
+                                <form name="quiz" method="POST" id="quiz3">
+                                    {% csrf_token %}
+
+                                <div id="qlist">
+                                    {% if QuizList %}
+                                        {% for QuizList in QuizList %}
+                                        {% if QuizList.content_id == ContentList.id %}
+                                            {% for QuestionList in QuestionList %}
+                                            {% if QuestionList.quiz_id == QuizList.id %}
+                                                <input type="hidden" value="{{ QuizList.id }}" id="quizNo" name="quizNo">
+                                                <input type="hidden" value="{{ QuestionList.id }}" name="quesionid[]" id="quesionid">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        Question: {{ QuestionList.id }}<br/><br/>
+                                                        <strong>{{ QuestionList.questionText }}</strong><br>
+
+                                                        {% for ChoiceList in ChoiceList %}
+                                                        {% if ChoiceList.question_id == QuestionList.id %}
+                                                            <input id="{{forloop.counter}}" type="radio" value="{{ ChoiceList.id }}" name="{{ChoiceList.question_id}}">
+                                                            <label for="{{forloop.counter}}">{{ ChoiceList.choiceText }}</label><br>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                </form>
+                          <button onclick="boolTest()" class="btn">Check Answer</button>
+                         <div class="card">   <div id="bResultDiv"></div></div>
+                        </div>
+                {% elif ContentList.style_id == 5 %} <!-- Multiple Choice Quiz Data -->
+                {% csrf_token %}
+                    <div class="card">
+                        <div class="card-title">
+                            <header style="text-align:center">
+                                <h3>Test Your Knowledge</h3>
+                            </header>
+                        </div>
+                        <div class="card-content">
+                                This is a text that explains what this is about, what this question is about, etc.
+                        </div>
+                        <div class="card-content">
+                            <span class="orange-text" id="flip">START</span>
+                        </div>
+                    </div>
+
+                        <div class="collapsible-body" id="panel">
+                         <form name="quiz" method="POST" id="quiz2">
+                           <div class="row ">
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;Questions:</div>
+                                    </div>
+
+                            <div id="qlist">
+                                {% if QuizList %}
+                                    {% for QuizList in QuizList %}
+                                    {% if QuizList.content_id == ContentList.id %}
+                                        {% for QuestionList in QuestionList %}
+                                        {% if QuestionList.quiz_id == QuizList.id %}
+                                            <input type="hidden" value="{{ QuizList.id }}" id="quizNo" name="quizNo">
+                                            <input type="hidden" value="{{ QuestionList.id }}" name="quesionid[]" id="quesionid">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    Question: {{ QuestionList.id }}:<br/><br/>
+                                                    {{ QuestionList.questionText }}<br>
+                                                    {% for ChoiceList in ChoiceList %}
+                                                    {% if ChoiceList.question_id == QuestionList.id %}
+                                                        <input id="{{forloop.counter}}" type="radio" value="{{ ChoiceList.id }}" name="{{ChoiceList.question_id}}">
+                                                        <label for="{{forloop.counter}}">{{ ChoiceList.choiceText }}</label><br>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                          </form>
+
+                               <button onclick="mytest()" class="btn">Check Answer</button>
+                        </div>
+                        <div class="card"> <div id="resultdiv"></div></div>
+
+            {% elif ContentList.style_id == 4 %}
+                <div class="row">
+                    {% static "" as baseUrl %}
+
+                       <div class="card">
+                        <div class="card-title">
+                            <header style="text-align:center">
+                                <h3>{{ ContentList.title }}</h3>
+                            </header>
+                        </div>
+                        <div class="card-content">
+                                {{ ContentList.description }}
+                        </div>
+                        <div class="card-content">
+                            <span class="orange-text" id="flip">START</span>
+                        </div>
+                    </div>
+
+                    {% if ContentList.checklist_set.all %}
+                    <div class="checklist" id="panel">
+                        <div class="card">
+                            <form name="quiz" method="POST" id="quiz4">
+                            {% for comment in ContentList.checklist_set.all %}
+                                    <div class="col s1 m1 l1">
+                                        <div class="card-content">
+                                            <input class="showcheckbox" type="checkbox" value="{{ comment.id }}"
+                                                 name="checklist[]" >
+                                        </div>
+                                    </div>
+                                    <div class="col s11 m11 l11">
+                                        {% if comment.title %}
+                                            <div class="card-content"><b>{{ comment.title }}</b><br/>
+                                        {% endif %}
+                                        {% if comment.description %}
+                                            {{ comment.description }}</div>
+                                        {% endif %}
+                                    </div>
+                            {% endfor %}
+                            </form>
+                              <div class="card-content">
+                              <button onclick="mychecklist()" class="btn"> Get Feedback</button></div>
+                        </div>
+                        <div class="card"><div id="feedbackdiv"></div>
+                    </div>
+                    {% endif %}
+                    <div class="col s12 m12 l12">
+                        <form name="done"  method='POST'>
+                            {% csrf_token %}
+                            <div class="card">
+                                 <div class="card-action">
+                                    <div style="display:inline" id="LC{{ContentList.id}}">
+                                        <i  class="material-icons md-36 orange600 right"
+                                            onclick="LearnedContent({{ContentList.id}},
+                                            {% if ContentList.id in CLC %}'UNFVT'{% else %}'FVT'{% endif %},'LC')">
+                                            {% if ContentList.id in CLC %}favorite{% else %}favorite_border{% endif %}</i>
+                                    </div>
+                                    <div style="display:inline" id="{{ContentList.id}}">
+                                        <i  class="material-icons md-36 orange600 left"
+                                            onclick="FavIndvContent({{ContentList.id}},
+                                            {% if ContentList.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %})">
+                                            {% if ContentList.id in CFC %}bookmark{% else %}bookmark_border{% endif %}</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    </div>
+            {% elif ContentList.style_id == 6 %}
+                <div class="row">
+                    {% static "" as baseUrl %}
+                    <div class="card">
+                        <div class="card-title center">
+                           <h4>{{ ContentList.title }}</h4>
+                        </div>
+                        <div class="card-content">
+                             <h6 style="text-transform:initial">{{ ContentList.description }}</h6>
+                        </div>
+                    </div>
+                    {% if summaryList %}
+                    <div class="row">
+                            <div class="col s12 m12 l12">
+                            {% for comment in summaryList %}
+                                <div class="card">
+                                    <div class="card-title center">
+                                       {% if comment.id == 1 %}
+                                            <i  class="material-icons md-48 rd ">assignment</i><br><h4>{{ comment.title }}</h4>
+                                        {% elif comment.id == 2 %}
+                                            <i  class="material-icons md-48 rd">visibility</i><br><h4>{{ comment.title }}</h4>
+                                        {% elif comment.id == 3 %}
+                                            <i  class="material-icons md-48 rd">directions_run</i><br><h4>{{ comment.title }}</h4>
+                                        {% endif %}
+
+                                    </div>
+
+                                    {% if summaryChildList %}
+                                    <div class="row">
+                                    {% for comment1 in summaryChildList %}
+                                        {% if comment.id == comment1.summary_id %}
+
+                                                <div class="card-content">
+
+                                                    {% if comment1.srNo %}
+                                                        <div class="col s1 m1 l1 ">
+                                                            <span class="right">{{ comment1.srNo }}.</span></div>
+                                                    {% endif %}
+                                                    {% if comment1.advice %}
+                                                        <div class="col s11 m11 l11 ">{{ comment1.advice }}<br/></div>
+                                                    {% endif %}
+                                                   <div class="hide-on-med-and-up"> <br/></div>
+                                                </div>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                        <br/><br/>
+                                          </div>
+                                    {% endif %}
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <form name="done"  method='POST'>
+                                {% csrf_token %}
+                                <div class="card">
+                                    <div class="card-action">
+                                        <div style="display:inline" id="LC{{ContentList.id}}">
+                                            <i  class="material-icons md-36 orange600 right"
+                                                onclick="LearnedContent({{ContentList.id}},
+                                                {% if ContentList.id in CLC %}'UNFVT'{% else %}'FVT'{% endif %},'LC')">
+                                                {% if ContentList.id in CLC %}favorite{% else %}favorite_border{% endif %}</i>
+                                        </div>
+                                        <div style="display:inline" id="{{ContentList.id}}">
+                                            <i  class="material-icons md-36 orange600 left"
+                                                onclick="FavIndvContent({{ContentList.id}},
+                                                {% if ContentList.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %})">
+                                                {% if ContentList.id in CFC %}bookmark{% else %}bookmark_border{% endif %}</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% elif ContentList.style_id == 8 %}
+                <div class="row">
+                    {% static "" as baseUrl %}
+                     <div class="card">
+                        <div class="card-title">
+                            <header style="text-align:center">
+                                <h3>{{ ContentList.title }}</h3>
+                            </header>
+                        </div>
+                        <div class="card-content">
+                                {{ ContentList.description|linebreaks }}
+                        </div>
+
+                    </div>
+
+                    {% if finishList %}
+
+                            {% for comment in finishList %}
+                                <div class="card">
+                                    {% if comment.imageURL %}
+                                    <div class="card-image">
+                                        <img class='responsive-img'
+                                        src='{% static comment.imageURL|cut:"staticfiles" %}' alt=""/>
+                                    </div>
+                                    {% endif %}
+                                    <div class="card-content">
+                                        <h4>{{ comment.congratWords }}</h4><br>
+                                          {{ comment.suggestion }}
+                                    </div>
+
+                                    <div class="card-action">
+                                        {% if comment.imageURL != '' %}
+                                            <a href="{{comment.imageURL|cut:'staticfiles'}}/{{comment.id}}"
+                                            target="_blank"><i class="material-icons md-36 left">file_download</i></a>
+                                        {% endif %}
+
+                                            <div class="fixed-action-btn horizontal right" style="display:inline">
+                                                <a class="btn-floating md-36 red"><i class="material-icons">share</i></a>
+                                                <ul>
+                                                    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                                        class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                                                    <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}"
+                                                        class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                                                    <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ comment.congratWords }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}"
+                                                        class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                                                </ul>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                    {% endif %}
+                </div>
+            {% elif ContentList.style_id == 7 %}
+                <div class="row">
+                    {% static "" as baseUrl %}
+                      <div class="card">
+                        <div class="card-title">
+                            <header style="text-align:center">
+                                <h3>{{ ContentList.title }}</h3>
+                            </header>
+                        </div>
+                        <div class="card-content">
+                                {{ ContentList.description|linebreaks }}
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        {% if Data %}
+                        {% for content in Data %}
+                          <div class="col s12 m12 l12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h5 class="left">{{ content.title }}</h5>
+                                </div>
+                                <div class="col s12 m12 l12 left">
+                                    <div class="row left">
+                                        {{ content.author }}, {{ content.createdDate.date }}
+                                    </div>
+                                    <div class="col chip right">
+                                        {{ content.keywords|safe|truncatechars:50 }}
+                                    </div>
+                                </div>
+                                <div class="card-image small">
+                                    {% if content.imageURL != '' %}
+                                        <a href="/library/libraryDetails/{{ content.pk }}">
+                                                    <img class="small" src='{% static content.imageURL|cut:"staticfiles"  %}' alt=""/>
+                                            </a>
+                                    {% else %}
+                                        <a href="/library/libraryDetails/{{ content.pk }}">
+                                            <img class="small" src="{{ baseUrl }}learnModule/images/{{content.LibraryType}}.png" alt=""/></a>
+                                    {% endif %}
+                                </div>
+
+                                <div class="card-content contentinfo">
+                                    <h4><b id="desc{{forloop.counter}}"></b></h4>
+                                    {{ content.description|safe }}
+                                    <div>
+                                    <br/>
+                                <a class="orange-text left" href="/library/libraryDetails/{{ content.pk }}">More Information</a>
+                                <span id="flip" class="right">
+                                        <i class="material-icons" onclick="tooglelibcontent({{forloop.counter}})" id="icon{{forloop.counter}}">keyboard_arrow_down</i>
+                                </span>
+                                    <br/>
+                                <div id="panel{{forloop.counter}}" style="display:none;" class="hidediv">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left">Content Type: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.LibraryType }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Country: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.country }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">File Format: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.format }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">File Size: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.sizeInPages }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Length: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.lengthInMB }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Language: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.language }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Complexity: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.complexity }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Written By: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.writtenBy }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Written For: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.writtenFor }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Keywords: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.keywords }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left">Copyright: </td>
+                                                <td style="text-align:right">
+                                                    <div class="chip">{{ content.copyRight }}</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                                </div>
+
+                                <div class="card-action">
+                                    <div class="row">
+                                            {% if content.file_content != '' and content.format_id == 2 %}
+                                            <a href="{{content.file_content|cut:'staticfiles'}}/{{content.pk}}"
+                                                target="_blank">
+                                                <i class="material-icons md-36 right">file_download</i>
+                                            </a>
+                                        {% elif content.file_content != '' and content.format_id == 10  %}
+                                                <a href="{{ content.file_content }}" target="_blank">
+                                                    <i class="material-icons md-36 right">more_horiz</i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                        {% else %}
+                            {% include "library/noResults.html" %}
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endif %}
+            {% endfor %}
+
+
+
+            {% else %}
+                <p>No content are available.</p>
+            {% endif %}
+        </div>
+                    {% include "learnModule/cpaginator.html" with page=ContentList %}
+    </div>
+</div>
+ {% endblock %}
+

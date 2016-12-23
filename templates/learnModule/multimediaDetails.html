@@ -1,0 +1,53 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+{% include 'learnModule/content-menu.html' %}
+<div class="jumbotron">
+  <div class="text-center">
+           <div class="pageTitle">Multimedia</div>
+  </div>
+</div>
+<!-- SHOW RESOURCES   -->
+    <section id="four" class="wrapper style1">
+        <div class="container">
+            <div class="row">
+                    {% include 'learnModule/left-sidebar.html' %}
+                <div class="9u">
+                    <section>
+                        {% if video_content %}
+                            <div class="row">
+                                {% for video in video_content %}
+
+                                        {% static "" as baseUrl %}
+                                        {% if video.video_file != '' %}
+                                            {% if video.video_file == "UNDRIP video English-SD.mp4" %}
+                                                <video width="560" height="315" controls autoplay><source src="{{ baseUrl }}learnModule/images/{{video.video_file}}" type="video/mp4"></video>
+                                            {% elif video.video_file == "Our Ancestral Lands - UNDRIP-SD.mp4" %}
+                                                <iframe width="560" height="315" src="{{ baseUrl }}learnModule/images/{{video.video_file}}" frameborder="0" allowfullscreen></iframe>
+                                            {% elif video.video_file == "www.cbc.ca/i/caffeine/syndicate/?mediaId=682794051557" %}
+                                                <!--<h1 style="text-transform:initial">Sorry, We couldn't load video. You can visit the following website to see this video: www.cbc.ca/i/caffeine/syndicate/?mediaId=682794051557</h1>-->
+                                                <iframe width="560" height="315" src="http://www.cbc.ca/player/play/682794051557" frameborder="0" allowfullscreen></iframe>
+                                            {% else %}
+                                                <iframe src="{{ video.video_file }}" frameborder="0" allowfullscreen></iframe>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    {% comment %}
+                                    {% if video.id == 7 %}
+                                        <iframe src="{{ video.video_file }}?start=00&end=30" frameborder="0" allowfullscreen></iframe>
+                                    {% else %}
+                                        <iframe src="{{ video.video_file }}" frameborder="0" allowfullscreen></iframe>
+                                    {% endif %}
+                                    {% endcomment %}
+
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>Content resources are not available.</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+ {% endblock %}

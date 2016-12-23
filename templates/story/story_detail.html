@@ -1,0 +1,120 @@
+{% extends 'learnModule/base-site.html' %}
+{% load urlify  %}
+{% load static %}
+{% load staticfiles %}
+{% block head_title %}{{ instance.title }} | {{ block.super }}{% endblock head_title %}
+
+<style>
+    {% block style %}
+        h1 {
+            color: #878878;
+        }
+    {% endblock style %}
+</style>
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l12">
+<!-- Story Master Data Start From Here -->
+            {% if instance %}
+                <h4 class="left">{{ instance.title }}</h4></br>
+                {% if instance.subTitle %}
+                     <div class="f10">{{ instance.subTitle }}</br></div>
+                {% endif %}
+                {% if instance.imageURL %}
+                    <img src='{% static instance.imageURL|cut:"staticfiles" %}' class='responsive-img'/></br>
+                {% endif %}
+                {% if instance.country %}
+                    <div class="f8">Country: {{ instance.country }}</br></div>
+                {% endif %}
+                {% if instance.community %}
+                    <div class="f8">Community: {{ instance.community }}</br></div>
+                {% endif %}
+                {% if instance.involvedCompany %}
+                    <div class="f8">Companies Involved: {{ instance.involvedCompany }}</br></div>
+                {% endif %}
+                {% if instance.body %}
+                    {{ instance.body|linebreaks }}</br>
+                {% endif %}
+                {{instance.opinionGood}}
+                {{instance.opinionBad}}
+                {{instance.opinionUnknown}}
+            {% else %}
+                No information are available.
+            {% endif %}
+<!-- Story Child Data Start From Here -->
+            {% if instance.storychild_set.all %}
+            <div class="articlechild">
+                <div class="col s12 m12">
+                {% for comment in instance.storychild_set.all %}
+                    {% if comment.imageURL %}
+                        <img src='{% static comment.imageURL|cut:"staticfiles" %}' class='responsive-img'/></br>
+                    {% endif %}
+                    {% if comment.imageCaption %}
+                        <div class="f8">Caption: {{ comment.imageCaption }}</br></div>
+                    {% endif %}
+                    {% if comment.title %}
+                        <h5><b>{{ comment.title }}</b></h5>
+                    {% endif %}
+                    <p>
+                        {{ comment.body|linebreaks }}
+                    </p>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Story Discussion Data -->
+<div class="container ">
+    <div class="row">
+        <h4>Discussion</h4></br>
+
+        <div class="col s12 m12 l12">
+
+                {% if instance.opinionGood %}
+                <ul class="collection">
+                    {% if instance.opinionGood %}
+                         <li class="collection-item">
+                          <div class="row">
+                                <div class="col s2 m2">
+                                    <i class="material-icons md-48 gr">check_circle</i>
+                                </div>
+                                <div class="col s10 m10">{{ instance.opinionGood }}</div>
+                            </div>
+                         </li>
+                    {% endif %}
+                    {% if instance.opinionBad %}
+                    <li class="collection-item">
+
+                        <div class="row">
+                            <div class="col s2 m2">
+                                <i class="material-icons md-48 rd">cancel</i>
+                            </div>
+                            <div class="col s10 m10">
+                                    {{ instance.opinionBad }}
+                            </div>
+                        </div>
+                        </li>
+                    {% endif %}
+                    {% if instance.opinionUnknown %}
+                    <li class="collection-item">
+                          <div class="row">
+                            <div class="col s2 m2">
+                                <i class="material-icons md-48 orange600">help</i>
+                            </div>
+                            <div class="col s10 m10">
+                                    {{ instance.opinionUnknown }}
+                            </div>
+                        </div>
+                        </li>
+                     {% endif %}
+                </ul>
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

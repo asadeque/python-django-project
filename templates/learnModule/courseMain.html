@@ -1,0 +1,183 @@
+{% extends 'learnModule/base-site.html' %}
+{% load static %}
+{% block content %}
+{% include 'learnModule/content-menu.html' %}
+<style>
+#myquiz
+{
+    margin-top: -10%;
+    visibility: hidden;
+}
+</style>
+<!-- SHOW RESOURCES   -->
+            <section id="four" class="wrapper style1">
+                <div class="container">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="well">
+                          <div>
+                             <ul class="nav">
+                                  {% if topic__title %}
+                                    {% for Topiccontent in topic__title %}
+                                    <li>
+                                        <label label-default="" class="tree-toggle nav-header">{{ Topiccontent.title }}</label>
+                                        {% for content in top_con %}
+                                            {% if Topiccontent.id == content.topic_id %}
+                                            <ul class="nav tree">
+                                                <li><a href="/learnModule/courseMain/{{ Topiccontent.course_id }}/{{ content.id }}">
+                                                        {{ content.title }}</a>
+                                                    </li>
+                                            </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    {% endfor %}
+                                        <label>
+                                            <a href="#" onclick="checkmyques()">Test your knowledge</a>
+                                        </label>
+                                    {% endif %}
+                              </ul>
+
+                         </div>
+                  </div>
+              </div>
+                 <div class="9u">
+                    <section id="mycontent">
+
+
+                        {% if content_title %}
+                            <div class="row">
+                                {% for content in content_title %}
+                                    <div class="resources">
+                                        <h1 style="text-align:center">{{ content.title }}</h1>
+
+                                        {% static "" as baseUrl %}
+                                         {% if content.imageURL != '' %}
+                                             <img src="{{ baseUrl }}learnModule/images/{{content.imageURL}}" alt=""/></a>
+                                         {% endif %}
+
+                                        <br><br/>
+                                        {% if content.description != '' %}
+                                         {{ content.description }}
+                                        {% endif %}
+                                        <br/><br/>
+
+                                        {% if content.video_file != '' %}
+                                            {% if content.video_file == "UNDRIP video English-SD.mp4" %}
+                                                <iframe width="560" height="315" src="{{ baseUrl }}learnModule/images/{{content.video_file}}" frameborder="0" allowfullscreen></iframe>
+                                            {% elif content.video_file == "Our Ancestral Lands - UNDRIP-SD.mp4" %}
+                                                <iframe width="560" height="315" src="{{ baseUrl }}learnModule/images/{{content.video_file}}" frameborder="0" allowfullscreen></iframe>
+                                            {% elif content.video_file == "www.cbc.ca/i/caffeine/syndicate/?mediaId=682794051557" %}
+                                                <!--<h1 style="text-transform:initial">Sorry, We couldn't load video. You can visit the following website to see this video: www.cbc.ca/i/caffeine/syndicate/?mediaId=682794051557</h1>-->
+                                                <!--<iframe width="560" height="315" src="www.cbc.ca/i/caffeine/syndicate/?mediaId=682794051557" frameborder="0" allowfullscreen></iframe>-->
+                                                <iframe width="560" height="315" src="http://www.cbc.ca/player/play/682794051557" frameborder="0" allowfullscreen></iframe>
+                                            {% else %}
+                                                <iframe src="{{ content.video_file }}" frameborder="0" allowfullscreen></iframe>
+                                            {% endif %}
+                                        {% endif %}
+                                        <br>
+
+                                     </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No content are available.</p>
+                        {% endif %}
+                    </section>
+    <div id="myquiz">
+<!-- Quiz start here -->
+<style type="text/css">
+    .chkans {margin:10px 10px -5px 0;}
+
+    span.chkans {position:relative;top:5px}
+
+    * html span.chkans {top:2px}
+</style>
+<script type="text/javascript">
+    function checkmyques()
+    {
+        document.getElementById('myquiz').style.visibility = "visible";
+        document.getElementById('mycontent').style.visibility = "hidden";
+    }
+var numQuest=10
+
+////////////////Stop Editing///////////////
+var ie=document.all
+function showAnswer(el,ans){
+ie? ie[el].innerHTML='The answer is: '+ ans : document.getElementById(el).innerHTML='The answer is: '+ ans
+}
+
+function addup()  {
+var q, right, statement, total=0
+questions=new Array();
+for (i = 0; i < numQuest; i++)
+questions[i]=0
+if (document.forms.quiz.q1['right1']){
+for (i = 0; i < numQuest; i++){
+q="q"+(i+1)
+right="right"+(i+1)
+if (document.forms.quiz[q][right].checked)
+questions[i]=1
+}
+}
+else if (document.getElementById){
+for (i = 0; i < numQuest; i++){
+right="right"+(i+1)
+if (document.getElementById(right).checked)
+questions[i]=1
+}
+}
+else
+return;
+for (i = 0; i < numQuest; i++)
+total += questions[i]
+/*/////////////////////////////////////////////////
+Set score response below.
+///////////////////Edit Below to Suit/////////////*/
+statement='You scored '+ total +' out of '+ numQuest +' correct, '+ Math.round(total/numQuest*100) +'%'
+/////////////////Stop Editing///////////////////
+ie? ie.results.innerHTML=statement : document.getElementById('results').innerHTML=statement
+}
+function clearR(){
+ie? ie.results.innerHTML='' : document.getElementById('results').innerHTML=''
+for (i = 0; i < numQuest; i++)
+ie? ie["ans"+(i+1)].innerHTML='' : document.getElementById("ans"+(i+1)).innerHTML=''
+}
+</script>
+</head>
+<body>
+    <header style="margin-left:20%">
+    <h1>Test Your Knowledge</h1>
+    </header>
+<form name="quiz" method="POST">
+    {% csrf_token %}
+
+ {% if question_quiz %}
+              {% for question_quiz in question_quiz %}
+              Question {{forloop.counter}}:<br>
+                    {{ question_quiz.questionText }}<br/>
+                    {% for choice_course in choice_course %}
+                    {% if choice_course.question.id == question_quiz.id %}
+                        <input id="w{{forloop.counter}}a" type="radio" value="{{choice_course.id}}"
+                                name="{{choice_course.question.id}}">
+                            <label for="w{{forloop.counter}}a">
+                                {{ choice_course.choiceText }}
+                            </label><br>
+                    {% endif %}
+                    {% endfor %}
+              {% endfor %}
+{% endif %}
+
+<input type="submit" value="Check Result" name="submit"/>
+
+</form></body></html>
+<!-- Quiz end here -->
+
+                </div>
+
+
+                 </div>
+            </div>
+        </div>
+    </section>
+ {% endblock %}

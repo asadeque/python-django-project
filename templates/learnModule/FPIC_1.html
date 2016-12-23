@@ -1,0 +1,302 @@
+{% extends 'learnModule/base-site.html' %}
+{% load urlify  %}
+{% load static %}
+{% block content %}
+{% static "" as baseUrl %}
+<style>
+#index-banner
+{
+    background: url("../../static/learnModule/images/hero02.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+}
+
+</style>
+
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="right">
+        <img src="../../static/learnModule/images/u283.PNG" height="425px">
+    </div>
+      <div class="container">
+             <div class="row">
+                <div class="col s12 m12">
+                  <div class="card">
+                    <div class="card-title center">
+                          <strong>What the F is FPIC?</strong>
+                    </div>
+                    <div class="card-content">
+                     <p>Free Prior and Informed Consent (FPIC) is the right that Indigenous communities have to say “yes”
+                         or “no” to mining, forestry, petroleum, water, or other project proposals that will affect their
+                         territories. FPIC is the right to have the required information and the necessary time to make
+                         decisions consistent with each Indigenous community’s own values, beliefs, customs, needs
+                         and priorities.</p>
+
+                     <p class="center" style="font-size:20px;"><b>You will find articles and other resources
+                         here on the right to Free Prior and Informed Consent.</b></p>
+                           <br/><br/>
+                           <div>
+                           <a href="/learnModule/FPICCourses/" class="orange-text left">MINI-COURSES</a>
+                           <span id="flip" class="right">
+                                <i class="material-icons" id="myicondown">keyboard_arrow_down</i>
+                            </span>
+                            <br/>
+                        <div id="panel" class="card-content">
+                              <p>The aim of Free Prior Informed consent (FPIC), is to establish bottom up participation and
+                                consultation of an Indigenous Population prior to the beginning of a development on ancestral
+                                land or using resources within the Indigenous Population's territory.[1] Indigenous people (IP)
+                                have a special connection to their land and resources, they inhabit 20% of the earth's surface,
+                                these areas are environmentally rich in both renewable and non-renewable resources.[2]</p>
+                            <br/>
+                              <p>The collective ownership style of most Indigenous Peoples conflicts with the modern global market
+                                and its continuous need for resources and land. To protect Indigenous peoples rights, international
+                                human rights law has created process and standards to safeguard their way of life and to encourage
+                                participation in the decision making process. One of these methods is the process of FPIC.</p>
+                            <br/>
+                              <p>There is criticism that many international conventions and treaties only require consultation
+                                and not consent, which is a much higher threshold. Without the requirement for consent Indigenous
+                                People are not able to veto government projects and developments in their area which directly
+                                affects their lives and cultures. FPIC allows Indigenous Peoples to have the right to self-determination
+                                and self-governance in national and local government decision making process over projects that concern
+                                their lives and resources.</p>
+
+                       </div>
+
+
+                </div>
+            </div>
+       </div>
+  </div>
+
+      </div>
+      </div>
+
+
+
+<!--Library Data-->
+<div class="container">
+
+    <div>
+      <h6><b>Highlighted Resources</b></h6><br>
+    </div>
+ <nav class="nav-extended">
+    <div class="nav-wrapper">
+
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active" href="#test1">ALL</a></li>
+        <li class="tab"><a href="#test2">INFORMATION</a></li>
+        <li class="tab"><a href="#test3">TOOLKIT</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="test1" class="col s12">
+   {% if LibraryData %}
+    <div class="row">
+    {% for LibraryData in LibraryData %}
+        <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if LibraryData.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{LibraryData.id}}">
+                        <img class="cardimgs" src='{% static LibraryData.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{LibraryData.id}}">
+                        <img class="cardimgs" src="{{ baseUrl }}learnModule/images/{{LibraryData.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+            <div class="card-content scontent">
+                <p>{{ LibraryData.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+            <div class="card-action" style="border:1 solid black;">
+
+                  <div style="margin-top:-15px;" id="all{{LibraryData.id}}">
+                                <i class="material-icons md-36 orange600 left"
+                                    onclick="fpicFavContent({{content.id}},
+                                        {{% if LibraryData.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                        {% if LibraryData.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                                </i>
+                   </div>
+                 <div class="fixed-action-btn horizontal" style="margin-top:-20px;">
+                    <a class="btn-floating md-24 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ LibraryData.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+
+                <div style="margin-top:-2.5em;" class="right">
+                {% if LibraryData.file_content != '' and LibraryData.format_id == 2 %}
+                    <a href="{{LibraryData.file_content|cut:'staticfiles'}}/{{LibraryData.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif LibraryData.file_content != '' and LibraryData.format_id == 10  %}
+                  <a href="{{ LibraryData.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+
+                </div>
+
+   <!--           {% if LibraryData.file_content != '' and LibraryData.format_id == 2 %}
+                    <a href="{{LibraryData.file_content|cut:'staticfiles'}}/{{LibraryData.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif LibraryData.file_content != '' and LibraryData.format_id == 10  %}
+                  <a href="{{ LibraryData.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+
+                <div  style="display:inline" id="all{{LibraryData.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{LibraryData.id}},
+                         {% if LibraryData.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                        {% if LibraryData.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+                <div class="fixed-action-btn horizontal col push-s4 push-m4" style="display:inline">
+                    <a class="btn-floating md-36 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ LibraryData.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+-->
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+  <div id="test2" class="col s12">
+  {% if DataInfo %}
+    <div class="row">
+    {% for DataInfo in DataInfo %}
+           <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if DataInfo.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{DataInfo.id}}"><img class="large cardimgs" src='{% static DataInfo.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{DataInfo.id}}"><img class="large cardimgs" src="{{ baseUrl }}learnModule/images/{{DataInfo.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+           <div class="card-content scontent">
+              <p>{{ DataInfo.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+          <div class="card-action" style="border:1 solid black;">
+
+                 <div  id="info{{DataInfo.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{DataInfo.id}},
+                         {% if DataInfo.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'info')">
+                        {% if DataInfo.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+              <div class="fixed-action-btn horizontal" style="margin-bottom:-10px">
+                             <a class="btn-floating md-24 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataInfo.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+                    <div style="margin-top:-1.5em;" class="right">
+                              {% if DataInfo.file_content != '' and DataInfo.format_id == 2 %}
+                    <a href="{{DataInfo.file_content|cut:'staticfiles'}}/{{DataInfo.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif DataInfo.file_content != '' and DataInfo.format_id == 10  %}
+                  <a href="{{ DataInfo.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+                 </div>
+
+
+
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+  <div id="test3" class="col s12">
+  {% if DataToolkit %}
+    <div class="row">
+    {% for DataToolkit in DataToolkit %}
+            <div class="setrow">
+          <div class="card">
+            <div class="card-image">
+                {% if DataToolkit.imageURL != '' %}
+                    <a href="/library/libraryDetails/{{DataToolkit.id}}"><img class="large cardimgs" src='{% static DataToolkit.imageURL|cut:"staticfiles" %}' alt=""/></a>
+                {% else %}
+                    <a href="/library/libraryDetails/{{DataToolkit.id}}"><img class="large cardimgs" src="{{ baseUrl }}learnModule/images/{{DataToolkit.LibraryType}}.png" alt=""/></a>
+                {% endif %}
+            </div>
+           <div class="card-content scontent">
+              <p>{{ DataToolkit.title|linebreaks|truncatechars:500 }}</p>
+            </div>
+              <div class="card-action" style="border:1 solid black;">
+
+
+                <div  style="display:inline" id="tool{{DataToolkit.id}}">
+                    <i  class="material-icons md-36 orange600 left"
+                        onclick="fpicFavContent({{DataToolkit.id}}, {% if DataToolkit.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'tool')">
+                        {% if DataToolkit.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+                </div>
+
+                 <div class="fixed-action-btn horizontal" style="margin-top:-20px;">
+                      <a class="btn-floating md-36 red">
+                    <i class="material-icons">share</i>
+                    </a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                        <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                        <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataToolkit.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                    </ul>
+                </div>
+                    <div style="margin-top:-2.5em;" class="right">
+
+                  {% if DataToolkit.file_content != '' and DataToolkit.format_id == 2 %}
+                    <a href="{{DataToolkit.file_content|cut:'staticfiles'}}/{{DataToolkit.id}}"
+                      target="_blank">
+                    <i class="material-icons md-36 right">file_download</i>
+                    </a>
+                {% elif DataToolkit.file_content != '' and DataToolkit.format_id == 10  %}
+                  <a href="{{ DataToolkit.file_content }}" target="_blank"><i class="material-icons md-36 right">more_horiz</i></a>
+                {% endif %}
+                       </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        No resources are available.
+    {% endif %}
+  </div>
+
+    <div class="row">
+         <a href="/library/" class="right orange-text">MORE LIKE THIS</a>
+    </div>
+</div>
+
+{% endblock %}
+

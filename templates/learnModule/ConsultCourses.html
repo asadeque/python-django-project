@@ -1,0 +1,264 @@
+{% extends 'learnModule/base-site.html' %}
+{% load urlify  %}
+{% load static %}
+{% block content %}
+{% static "" as baseUrl %}
+<style>
+#index-banner
+{
+    background: url("../../static/learnModule/images/hero03.JPG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+}
+
+</style>
+
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="right">
+     <img src="../../static/learnModule/images/u485.PNG" height="425px">
+    </div>
+      <div class="container">
+             <div class="row">
+                <div class="col s12 m12">
+                  <div class="card">
+                    <div class="card-title center">
+                          <strong>Indigenous Consultation</strong>
+                    </div>
+                    <div class="card-content">
+
+A brief definition of what we want to highlight that ends up in inviting people either to read more or to access the primers in subjects related to consultation or the toolkit.
+                        <br/><br/>
+                        <div>
+                           <a href="/learnModule/ConsultCourses/" class="orange-text left">MINI-COURSES</a>
+                           <span id="flip" class="right">
+                                <i class="material-icons" id="myicondown">keyboard_arrow_down</i>
+                            </span>
+                            <br/>
+                            <div id="panel" class="card-content">
+                                <p>In Canada, the duty to consult and accommodate with Aboriginal peoples arises when the Crown
+                        contemplates actions or decisions that may affect an Aboriginal person's Aboriginal or Treaty
+                        rights.[1] This duty arises most often in the context of natural resource extraction such as
+                        mining, forestry, oil, and gas.</p>
+                                <br/>
+                      <p>It is very difficult to practically separate the duty to consult and accommodate because
+                        consultation may lead to the fulfillment of the duty to accommodate [2] and consultation is
+                        meaningless if accommodation is excluded from the outset.[3] As such, the two are intertwined
+                        and must be addressed together.</p><br/>
+                      <p>The broad purpose of the duty to consult and accommodate is to advance the objective of
+                        reconciliation of pre-existing Aboriginal societies with the assertion of Crown Sovereignty.
+                        This duty flows from the honour of the Crown and its fiduciary duty to Indigenous peoples.[4]
+                        The obligation to provide consultation and a decision-making process that is compatible with
+                        the honour of the Crown is embedded in Section Thirty-five of the Constitution Act, 1982 and
+                        Treaties. In a Treaty context, the duty to consult serves to remedy “a procedural gap”
+                        in the Treaty.[5]</p><br/>
+                      <p>The Supreme Court of Canada has acknowledged that there are gaps in the texts of historical
+                        numbered treaties. This means that the oral negotiations surrounding treaty negotiations are
+                        necessary to fully understand the rights and obligations to which treaties give rise.</p>
+                           </div>
+
+                      </div>
+
+                </div>
+            </div>
+       </div>
+  </div>
+
+</div>
+</div>
+
+
+
+    <!--Library Data-->
+<div class="container">
+
+    <div>
+      <h6><b>Mini Resources</b></h6><br>
+    </div>
+ <nav class="nav-extended">
+    <div class="nav-wrapper">
+
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active" href="#test1">ALL</a></li>
+        <li class="tab"><a href="#test2">NEW</a></li>
+        <li class="tab"><a href="#test3">RECOMMENDED</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="test1" class="col s12">
+   {% if Data %}
+    <div class="row">
+    {% for Data in Data %}
+        <div class="col s12 m4 l4">
+          <div class="card">
+            <div class="card-image waves-effect">
+                {% if Data.imageURL %}
+                  <a href="/learnModule/CourseHome/{{ Data.pk }}">
+                      <img class="large cardimgs" src='{% static Data.imageURL|cut:"staticfiles" %}'/></a>
+                    <span class="col s12 card-title grey white-text text-darken-1 op">{{ Data.name|linebreaks|truncatechars:200 }}</span>
+                {% endif %}
+            </div>
+            <div class="card-content">
+              <p>{{ Data.description|linebreaks|truncatechars:200 }}</p>
+            </div>
+            <div class="card-content brown-text f9">
+              {% if Data.complexity %}
+              <p>Complexity: {{ Data.complexity }}</p>
+              {% endif %}
+              {% if Data.duration %}
+              <p>Duration: {{ Data.duration }} minutes</p>
+              {% endif %}
+              <p>Content:
+              {% for titleList in ContentTitle %}
+                {% if titleList.topic.course.id == Data.id %}
+                  {{ titleList.title|truncatechars:20 }} ;
+                {% endif %}
+              {% endfor %}</p>
+            </div>
+            <div class="card-action">
+              <a href="/learnModule/contentsHome/{{ Data.id }}" class="left">START FROM BEGINNING</a>
+              <div  style="display:inline" id="all{{Data.id}}">
+                  <i  class="material-icons md-36 orange600 left"
+                      onclick="FavCourse({{Data.id}},
+                        {% if Data.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'all')">
+                      {% if Data.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+              </div>
+              <div class="fixed-action-btn horizontal right" style="display:inline">
+                  <a class="btn-floating md-36 red">
+                      <i class="material-icons">share</i>
+                  </a>
+                  <ul>
+                      <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                      <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                      <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ Data.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                  </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div id="test2" class="col s12">
+  {% if DataNew %}
+    <div class="row">
+    {% for DataNew in DataNew %}
+        <div class="col s12 m4 l4">
+          <div class="card">
+            <div class="card-image">
+                {% if DataNew.imageURL %}
+                  <a href="/learnModule/CourseHome/{{ DataNew.pk }}">
+                      <img class="large cardimgs" src='{% static DataNew.imageURL|cut:"staticfiles" %}'/></a>
+                  <span class="col s12 card-title grey white-text text-darken-1 op">{{ DataNew.name|linebreaks|truncatechars:200 }}</span>
+                {% endif %}
+            </div>
+            <div class="card-content">
+              <p>{{ DataNew.description|linebreaks|truncatechars:200 }}</p>
+            </div>
+            <div class="card-content brown-text f9">
+              {% if DataNew.complexity %}
+              <p>Complexity: {{ DataNew.complexity }}</p>
+              {% endif %}
+              {% if DataNew.duration %}
+              <p>Duration: {{ DataNew.duration }} minutes</p>
+              {% endif %}
+              <p>Content:
+              {% for titleList in ContentTitle %}
+                {% if titleList.topic.course.id == DataNew.id %}
+                  {{ titleList.title|truncatechars:20 }} ;
+                {% endif %}
+              {% endfor %}</p>
+            </div>
+            <div class="card-action">
+              <a href="/learnModule/contentsHome/{{ DataNew.id }}" class="left">START FROM BEGINNING</a>
+              <div  style="display:inline" id="new{{DataNew.id}}">
+                  <i  class="material-icons md-36 orange600 left"
+                      onclick="FavCourse({{DataNew.id}},
+                        {% if DataNew.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'new')">
+                      {% if DataNew.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+              </div>
+                <div class="fixed-action-btn horizontal right" style="display:inline">
+                  <a class="btn-floating md-36 red">
+                      <i class="material-icons">share</i>
+                  </a>
+                  <ul>
+                      <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                      <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                      <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataNew.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                  </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div id="test3" class="col s12">
+  {% if DataRecommended %}
+    <div class="row">
+    {% for DataRecommended in DataRecommended %}
+        <div class="col s12 m4 l4">
+          <div class="card">
+            <div class="card-image">
+                {% if DataRecommended.imageURL %}
+                  <a href="/learnModule/CourseHome/{{ DataRecommended.pk }}">
+                      <img class="large cardimgs" src='{% static DataRecommended.imageURL|cut:"staticfiles" %}'/></a>
+                  <span class="col s12 card-title grey white-text text-darken-1 op">{{ DataRecommended.name|linebreaks|truncatechars:200 }}</span>
+                {% endif %}
+            </div>
+            <div class="card-content">
+              <p>{{ DataRecommended.name|linebreaks|truncatechars:200 }}</p>
+            </div>
+            <div class="card-content">
+              <p>{{ DataRecommended.description|linebreaks|truncatechars:200 }}</p>
+            </div>
+            <div class="card-content brown-text f9">
+              {% if DataRecommended.complexity %}
+              <p>Complexity: {{ DataRecommended.complexity }}</p>
+              {% endif %}
+              {% if DataRecommended.duration %}
+              <p>Duration: {{ DataRecommended.duration }} minutes</p>
+              {% endif %}
+              <p>Content:
+              {% for titleList in ContentTitle %}
+                {% if titleList.topic.course.id == DataRecommended.id %}
+                  {{ titleList.title|truncatechars:20 }} ;
+                {% endif %}
+              {% endfor %}</p>
+            </div>
+            <div class="card-action">
+              <a href="/learnModule/contentsHome/{{ DataRecommended.id }}" class="left">START FROM BEGINNING</a>
+              <div  style="display:inline" id="rec{{DataRecommended.id}}">
+                  <i  class="material-icons md-36 orange600 left"
+                      onclick="FavCourse({{DataRecommended.id}},
+                        {% if DataRecommended.id in CFC %}'UNFVT'{% else %}'FVT'{% endif %},'rec')">
+                      {% if DataRecommended.id in CFC %}favorite{% else %}favorite_border{% endif %}</i>
+              </div>
+              <div class="fixed-action-btn horizontal right" style="display:inline">
+                  <a class="btn-floating md-36 red">
+                      <i class="material-icons">share</i>
+                  </a>
+                  <ul>
+                      <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn-floating red"><i class="material-icons">cloud</i></a></li>
+                      <li><a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" class="btn-floating yellow darken-1"><i class="material-icons">cloud_circle</i></a></li>
+                      <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ DataRecommended.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}" class="btn-floating blue"><i class="material-icons">email</i></a></li>
+                  </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
